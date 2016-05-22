@@ -1,5 +1,8 @@
 package controller;
 
+import dao.AccumulatorDao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,71 +14,69 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Accumulator;
 import model.Battery;
 import model.DBCotroller;
+import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
+import sample.ServiceLocator;
+
+import java.util.List;
 
 /**
  * Created by Елена on 20.12.2015.
  */
 public class BatteryController {
-    private DBCotroller dbControl = new DBCotroller();
-
-
     @FXML
-    private TableView<Battery> tableBattery;
+    private TableView<Accumulator> tableBattery;
     @FXML
-    private TableColumn<Battery, String> idColumn;
+    private TableColumn<Accumulator, String> idColumn;
     @FXML
-    private TableColumn<Battery, String> factoryColumn;
+    private TableColumn<Accumulator, String> factoryColumn;
     @FXML
-    private TableColumn<Battery, String> costColumn;
+    private TableColumn<Accumulator, String> costColumn;
     @FXML
-    private TableColumn<Battery, String> typeColumn;
+    private TableColumn<Accumulator, String> typeColumn;
     @FXML
-    private TableColumn<Battery, String> dateCreateColumn;
+    private TableColumn<Accumulator, String> dateCreateColumn;
     @FXML
-    private TableColumn<Battery, String> factoryNumberColumn;
+    private TableColumn<Accumulator, String> factoryNumberColumn;
     @FXML
-    private TableColumn<Battery, String> garageNumberColumn;
+    private TableColumn<Accumulator, String> garageNumberColumn;
     @FXML
     private TextField txtId;
 
+    private AccumulatorDao accumulatorDao = ServiceLocator.getAccumulatorDaoInstance();
+
+    private ObservableList<Accumulator> result = FXCollections.observableArrayList();
 
     private ExportData exportData = ExportData.getInstance();
 
     @FXML
     private void initialize() {
-        // устанавливаем тип и значение которое должно хранится в колонке
-        idColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("id"));
-        factoryColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("factory"));
-        costColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("cost"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("type"));
-        dateCreateColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("dateCreate"));
-        factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("factoryNumber"));
-        garageNumberColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("garageNumber"));
-
-
-        updateTableClick();
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        factoryColumn.setCellValueFactory(new PropertyValueFactory<>("factory"));
+        costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        dateCreateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<>("factoryNumber"));
+        garageNumberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        refreshTable();
     }
 
     @FXML
     private void updateTableClick() {
-        tableBattery.getItems().clear();
-        // заполняем таблицу данными
-        tableBattery.setItems(dbControl.selectBattery("SELECT Id_Аккумулятор, Cast( Стоимость as int) as Стоимость, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
-                "Завод_изготовитель, Тип, Заводской_номер, Гаражный_номер FROM Аккумулятор"));
+        refreshTable();
     }
 
-    //удаление записи из таблицы
     @FXML
     private void deleteBatteryClick() {
         int selectedIndex = tableBattery.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            String id = tableBattery.getItems().get(selectedIndex).getId();
-            String sql = "DELETE FROM Аккумулятор WHERE Id_Аккумулятор='" + id + "'";
-            dbControl.delete(sql);
+            Integer id = tableBattery.getItems().get(selectedIndex).getId();
+            accumulatorDao.deleteQuery(id);
+            refreshTable();
         } else {
             // нет выбранных записей, сэр.
             Dialogs.create()
@@ -96,8 +97,6 @@ public class BatteryController {
             stage.setTitle("Добавить аккумулятор");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
-
         } catch (Exception e) {
             Dialogs.create()
                     .message(e.getMessage())
@@ -106,15 +105,13 @@ public class BatteryController {
         }
     }
 
-    //===========================================================================================================
     @FXML
     private void editBatteryClick() {
-        Battery selectedBattery = tableBattery.getSelectionModel().getSelectedItem();
+        Accumulator selected = tableBattery.getSelectionModel().getSelectedItem();
 
-        if (selectedBattery != null) {
+        if (selected != null) {
             try {
-
-                exportData.myObject = selectedBattery;
+                exportData.myObject = selected;
                 exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryEditAdd.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
@@ -141,11 +138,11 @@ public class BatteryController {
     @FXML
     private void createBatteryCardClick() {
 
-        Battery selectedBattery = tableBattery.getSelectionModel().getSelectedItem();
+        Accumulator selected = tableBattery.getSelectionModel().getSelectedItem();
 
-        if (selectedBattery != null) {
+        if (selected != null) {
             try {
-                exportData.myObject = selectedBattery;
+                exportData.myObject = selected;
                 exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryCard.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
@@ -188,18 +185,25 @@ public class BatteryController {
     }
 
     @FXML
+    //todo
     private void searchClick() {
-        String id = "";
-        if (txtId.getText() == null || txtId.getText().length() == 0) {
+        String id = txtId.getText();
+        if (StringUtils.isEmpty(id)) {
             Dialogs.create()
                     .message("Введите id для поиска!\n")
                     .showWarning();
         } else {
-            tableBattery.getItems().clear();
-            id = txtId.getText();
-            tableBattery.setItems(dbControl.selectBattery("SELECT Id_Аккумулятор, Cast( Стоимость as int) as Стоимость, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
-                    "Завод_изготовитель, Тип, Заводской_номер, Гаражный_номер " +
-                    "FROM Аккумулятор WHERE Id_Аккумулятор='" + id + "'"));
+            refreshTable(accumulatorDao.findByFactoryNumber(id));
         }
+    }
+
+    private void refreshTable(List<Accumulator> results) {
+        result.setAll(results);
+        tableBattery.setItems(result);
+    }
+
+    private void refreshTable() {
+        result.setAll(accumulatorDao.findAll());
+        tableBattery.setItems(result);
     }
 }

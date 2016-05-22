@@ -21,6 +21,7 @@ import org.controlsfx.dialog.Dialogs;
 import sample.ServiceLocator;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Елена on 17.12.2015.
@@ -57,24 +58,24 @@ public class BusController {
 
     @FXML
     private void initialize() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("id"));
-        factoryColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factory"));
-        costColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("cost"));
-        normColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("norm"));
-        dateCreateColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("dateCreate"));
-        factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factoryNumber"));
-        modelColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("model"));
-        indicationColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("indication"));
-        refreshTable();
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        factoryColumn.setCellValueFactory(new PropertyValueFactory<>("factory"));
+        costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        normColumn.setCellValueFactory(new PropertyValueFactory<>("norm"));
+        dateCreateColumn.setCellValueFactory(new PropertyValueFactory<>("dateCreate"));
+        factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<>("factoryNumber"));
+        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        indicationColumn.setCellValueFactory(new PropertyValueFactory<>("indication"));
+        refreshTable(busDao.findAll());
     }
 
     @FXML
     private void updateTableClick() {
-        refreshTable();
+        refreshTable(busDao.findAll());
     }
 
-    private void refreshTable() {
-        result.setAll(busDao.findAll());
+    private void refreshTable(List<Bus> all) {
+        result.setAll();
         tableBus.setItems(result);
     }
 
@@ -107,7 +108,7 @@ public class BusController {
             stage.setTitle("Добавить шину");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-            refreshTable();
+            refreshTable(busDao.findAll());
         } catch (Exception e) {
             Dialogs.create()
                     .message(e.getMessage())
@@ -131,7 +132,7 @@ public class BusController {
                 stage.setTitle("Изменить");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
-                refreshTable();
+                refreshTable(busDao.findAll());
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
@@ -205,9 +206,7 @@ public class BusController {
                     .message("Введите заводской номер для поиска!\n")
                     .showWarning();
         } else {
-            tableBus.getItems().clear();
-            result.setAll(busDao.findByFactoryNumber(factoryNumber));
-            tableBus.setItems(result);
+            refreshTable(busDao.findByFactoryNumber(factoryNumber));
         }
     }
 }
