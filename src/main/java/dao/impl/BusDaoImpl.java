@@ -38,7 +38,7 @@ public class BusDaoImpl implements BusDao {
 
     public void delete(Integer busId) {
         Session session = sessionFactory.openSession();
-        Bus bus = session.load(Bus.class, busId);
+        Bus bus = findById(busId);
         Transaction transaction = session.beginTransaction();
         try {
             transaction.begin();
@@ -51,9 +51,16 @@ public class BusDaoImpl implements BusDao {
         session.close();
     }
 
+    public Bus findById(Integer busId) {
+        Session session = sessionFactory.openSession();
+        Bus bus = session.get(Bus.class, busId);
+        session.close();
+        return bus;
+    }
+
     public Integer deleteQuery(Integer busId) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("delete Bus where id = :id");
+        Query query = session.createQuery("delete model.Bus where id = :id");
         query.setInteger("id", busId);
 
         Transaction transaction = session.beginTransaction();
@@ -85,7 +92,7 @@ public class BusDaoImpl implements BusDao {
 
     public void update(Bus bus) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("update Bus set cost = :cost, dateCreate = :dateCreate, factory = :factory, " +
+        Query query = session.createQuery("update model.Bus set cost = :cost, dateCreate = :dateCreate, factory = :factory, " +
                 " factoryNumber = :factoryNumber, indication = :indication, model = :model, norm = :norm where id = :id");
         query.setInteger("id", bus.getId());
         query.setDouble("cost", bus.getCost());

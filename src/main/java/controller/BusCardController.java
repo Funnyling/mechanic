@@ -1,5 +1,6 @@
 package controller;
 
+import dao.BusDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,12 +8,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Bus;
-import model.Card;
-import model.DBCotroller;
+import model.*;
+import sample.DaoUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class BusCardController {
 
@@ -48,56 +49,20 @@ public class BusCardController {
     private TableColumn<Card, String> milageColumn;
 
 
-    private Bus bus = new Bus();
+    private BusDao busDao = DaoUtils.getBusDaoInstance();
+
+    private Bus bus;
 
     @FXML
     private void initialize() {
-        setBus();
-        setTable();
-    }
 
-    private void setBus() {
-        bus = (Bus) ExportData.getInstance().myObject;
-
-        txtFactory.setText(bus.getFactory());
-        txtCost.setText(bus.getCost().toString());
-        txtNorm.setText(bus.getNorm());
-        txtDateCreate.setText(bus.getDateCreate().toString());
-        txtFactoryNumber.setText(bus.getFactoryNumber());
-        txtModel.setText(bus.getModel());
-        txtIndication.setText(bus.getIndication());
-    }
-
-
-    private void setTable() {
-
-        Card card = new Card();
         autoColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("auto"));
         dateAddColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("dateAdd"));
         dateDelColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("dateDel"));
         reasonColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("reason"));
         stateColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("state"));
         milageColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("milage"));
-
-        ObservableList<Card> tmp = dbControl.selectCard(bus.getId().toString());
-        ObservableList<Card> result = FXCollections.observableArrayList();
-
-        int milage = 0;
-        int i = 0;
-        String tmpsts = tmp.get(i).getId();
-        for (Card b : tmp) {
-            if (b.getId() == tmpsts) {
-                milage += b.getMilage();
-                i++;
-            } else {
-                tmpsts = b.getId();
-                result.add(new Card(tmp.get(i - 1).getAuto(), tmp.get(i - 1).getDateAdd(), tmp.get(i - 1).getDateDel(), tmp.get(i - 1).getReason(), tmp.get(i - 1).getState(), milage));
-                milage = 0;
-            }
-        }
-
-        tableCard.setItems(tmp);
-
+        tableCard.setItems(null);
     }
 
     @FXML
@@ -108,7 +73,24 @@ public class BusCardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        // "D:\\курс 5\\9 семестр\\курсовой\\документы\\Карточка_учета_работы_автомобильной_шины.doc"
+    public void refresh(Bus bus) {
+        this.bus = busDao.findById(bus.getId());
+        ObservableList<Card> result = FXCollections.observableArrayList();
+        for (BusAuto busAuto : bus.getBusAutoList()) {
+            Auto auto = busAuto.getAuto();
+            List<Trip> trips = auto.getTrips();
+            Double mileage = 0D;
+
+            for (Trip trip : trips) {
+                mileage += trip.getMileage();
+            }
+            String autoNumber = auto.getGosNumber() + ", " + auto.getNumber() + ", " + auto.getModel();
+            result.add(new Card(bus.getId().toString(), autoNumber, busAuto.getStartDate(), busAuto.getEndDate(),
+                    busAuto.getReason(), busAuto.getCondition(), mileage.intValue()));
+
+        }
+        tableCard.setItems(result);
     }
 }

@@ -84,11 +84,6 @@ public class BusEditAddController {
             DBCotroller dbCotrol = new DBCotroller();
             if (editFlag == true) {
                 bus.setId(Integer.valueOf(txtId.getText()));
-//                String sql = "UPDATE Шина SET Стоимость_комплекта=" + bus.getCost() +
-//                        ", Дата_изготовления=cast('" + bus.getDateCreate() + "' as Date), Завод_изготовитель='" + bus.getFactory() +
-//                        "', Обозначение='" + bus.getIndication() + "', Модель='" + bus.getModel() +
-//                        "', Заводской_номер='" + bus.getFactoryNumber() + "', Норма_слойности='" + bus.getNorm() + "' WHERE Id_шина =" + bus.getId();
-//                dbCotrol.update(sql);
                 busDao.update(bus);
             } else {
                 busDao.save(bus);

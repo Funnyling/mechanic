@@ -25,13 +25,13 @@ public class Auto {
     @Column(name = "model", length = 25)
     private String model;
 
-    @OneToMany(mappedBy = "auto")
+    @OneToMany(mappedBy = "auto", fetch = FetchType.EAGER)
     private List<Trip> trips;
 
-    @OneToMany(mappedBy = "auto")
+    @OneToMany(mappedBy = "auto", fetch = FetchType.EAGER)
     private List<BusAuto> busAutoList;
 
-    @OneToMany(mappedBy = "auto")
+    @OneToMany(mappedBy = "auto", fetch = FetchType.EAGER)
     private List<AccumulatorAuto> accumulatorAutoList;
 
     public Integer getId() {

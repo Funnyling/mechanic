@@ -21,6 +21,8 @@ import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
 import sample.DaoUtils;
 
+import java.io.IOException;
+
 /**
  * Created by Елена on 17.12.2015.
  */
@@ -145,7 +147,7 @@ public class BusController {
     }
 
     @FXML
-    private void createBusCardClick() {
+    private void createBusCardClick() throws IOException {
 
         Bus selectedBus = tableBus.getSelectionModel().getSelectedItem();
 
@@ -154,7 +156,9 @@ public class BusController {
                 exportData.myObject = selectedBus;
                 exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busCard.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
+                Parent root = fxmlLoader.load();
+                BusCardController controller = fxmlLoader.getController();
+                controller.refresh(selectedBus);
                 Stage stage = new Stage();
                 stage.setTitle("Карточка учета");
                 stage.setScene(new Scene(root));

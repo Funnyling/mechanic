@@ -33,7 +33,7 @@ public class Bus {
     @Column(name = "norm", length = 20)
     private String norm;
 
-    @OneToMany(mappedBy = "bus")
+    @OneToMany(mappedBy = "bus", fetch = FetchType.EAGER)
     private List<BusAuto> busAutoList;
 
     public Integer getId() {

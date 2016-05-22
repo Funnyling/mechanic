@@ -8,13 +8,15 @@ public interface BusDao {
 
     List<Bus> findAll();
 
-    void delete(Integer id);
+    void delete(Integer busId);
 
-    Integer deleteQuery(Integer id);
+    Integer deleteQuery(Integer busId);
 
     void save(Bus bus);
 
     void update(Bus bus);
 
     List<Bus> findByFactoryNumber(String factoryNumber);
+
+    Bus findById(Integer busId);
 }
