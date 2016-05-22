@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * Created by Елена on 17.12.2015.
  */
 public class MenuController {
-    Stage stage = new Stage();
+    private Stage stage = new Stage();
 
     @FXML
     private void openBus(ActionEvent event) {
@@ -20,7 +20,6 @@ public class MenuController {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busView.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             BusController controller = fxmlLoader.<BusController>getController();
-            controller.test();
             stage.setTitle("Информация о шинах");
             stage.setScene(new Scene(root));
             stage.show();
@@ -35,7 +34,7 @@ public class MenuController {
     private void openBattery(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryView.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             stage.setTitle("Информация об аккумуляторах");
             stage.setScene(new Scene(root));
             stage.show();

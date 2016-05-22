@@ -1,5 +1,7 @@
 package controller;
 
+import dao.BusDao;
+import dao.impl.BusDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,11 +44,15 @@ public class BusController {
     @FXML
     private TextField txtId;
 
+    private String test;
+
+    private BusDao busDao;
+
     private ExportData exportData = ExportData.getInstance();
 
     @FXML
     private void initialize() {
-        // устанавливаем тип и значение которое должно хранится в колонке
+        busDao = new BusDaoImpl();
         idColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("id"));
         factoryColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factory"));
         costColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("cost"));
@@ -55,8 +61,7 @@ public class BusController {
         factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factoryNumber"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("model"));
         indicationColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("indication"));
-
-//        updateTableClick();
+        test = busDao.echo();
     }
 
     @FXML
@@ -73,7 +78,7 @@ public class BusController {
         int selectedIndex = tableBus.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            String id = tableBus.getItems().get(selectedIndex).getId();
+            Integer id = tableBus.getItems().get(selectedIndex).getId();
             String sql = "DELETE FROM Шина WHERE Id_шина='" + id + "'";
             dbControl.delete(sql);
         } else {
@@ -201,9 +206,5 @@ public class BusController {
                     "Завод_изготовитель, Обозначение, Модель, Заводской_номер, Норма_слойности " +
                     "FROM Шина WHERE Id_шина='" + id + "'"));
         }
-    }
-
-    public void test() {
-        System.out.println("hui");
     }
 }

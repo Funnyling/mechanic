@@ -1,39 +1,46 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Entity
+@Table(name = "bus")
 public class Bus {
-    private String id;
+
+    @Id
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "cost")
     private String cost;
-    private String dateCreate;
+
+    @Column(name = "date_create")
+    private Date dateCreate;
+
+    @Column(name = "factory")
     private String factory;
+
+    @Column(name = "factoryNumber")
     private String factoryNumber;
+
+    @Column(name = "indication")
     private String indication;
+
+    @Column(name = "model")
     private String model;
+
+    @Column(name = "norm")
     private String norm;
 
+    public Integer getId() {
+        return id;
+    }
 
-    public Bus(String id, String cost, String dateCreate, String factory, String factoryNumber, String indication, String model, String norm) {
+    public void setId(Integer id) {
         this.id = id;
-        this.cost = cost;
-        this.dateCreate = dateCreate;
-        this.factory = factory;
-        this.factoryNumber = factoryNumber;
-        this.indication = indication;
-        this.model = model;
-        this.norm = norm;
-    }
-
-    public Bus() {
-
-    }
-
-    public String getDateCreate() {
-        return dateCreate;
-    }
-
-    public void setDateCreate(String dateCreate) {
-        this.dateCreate = dateCreate;
     }
 
     public String getCost() {
@@ -44,12 +51,12 @@ public class Bus {
         this.cost = cost;
     }
 
-    public String getId() {
-        return id;
+    public Date getDateCreate() {
+        return dateCreate;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
     public String getFactory() {
@@ -90,5 +97,21 @@ public class Bus {
 
     public void setNorm(String norm) {
         this.norm = norm;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bus)) return false;
+
+        Bus bus = (Bus) o;
+
+        return id.equals(bus.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

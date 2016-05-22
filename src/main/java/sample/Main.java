@@ -5,16 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main extends Application {
 
-    private AnnotationConfigApplicationContext applicationContext;
-
     @Override
     public void init() throws Exception {
-        applicationContext = new AnnotationConfigApplicationContext(SpringCofiguration.class);
         super.init();
+        HibernateUtils.setUpSession();
     }
 
     @Override
@@ -27,8 +24,8 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        applicationContext.close();
         super.stop();
+        HibernateUtils.closeSessionFactory();
     }
 
     public static void main(String[] args) {

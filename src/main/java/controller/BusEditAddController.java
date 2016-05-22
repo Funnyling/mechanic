@@ -48,11 +48,11 @@ public class BusEditAddController {
     private void setBus() {
         bus = (Bus) ExportData.getInstance().myObject;
 
-        txtId.setText(bus.getId());
+        txtId.setText(bus.getId().toString());
         txtFactory.setText(bus.getFactory());
         txtCost.setText(bus.getCost());
         txtNorm.setText(bus.getNorm());
-        txtDateCreate.setText(bus.getDateCreate());
+        txtDateCreate.setText(bus.getDateCreate().toString());
         txtFactoryNumber.setText(bus.getFactoryNumber());
         txtModel.setText(bus.getModel());
         txtIndication.setText(bus.getIndication());
@@ -69,11 +69,11 @@ public class BusEditAddController {
 
         if (isInputValid()) {
 
-            bus.setId(txtId.getText());
+            bus.setId(Integer.valueOf(txtId.getText()));
             bus.setFactory(txtFactory.getText());
             bus.setCost(txtCost.getText());
             bus.setNorm(txtNorm.getText());
-            bus.setDateCreate(txtDateCreate.getText());
+            bus.setDateCreate(null); //todo
             bus.setFactoryNumber(txtFactoryNumber.getText());
             bus.setModel(txtModel.getText());
             bus.setIndication(txtIndication.getText());

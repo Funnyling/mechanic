@@ -62,7 +62,7 @@ public class BusCardController {
         txtFactory.setText(bus.getFactory());
         txtCost.setText(bus.getCost());
         txtNorm.setText(bus.getNorm());
-        txtDateCreate.setText(bus.getDateCreate());
+        txtDateCreate.setText(bus.getDateCreate().toString());
         txtFactoryNumber.setText(bus.getFactoryNumber());
         txtModel.setText(bus.getModel());
         txtIndication.setText(bus.getIndication());
@@ -79,7 +79,7 @@ public class BusCardController {
         stateColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("state"));
         milageColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("milage"));
 
-        ObservableList<Card> tmp = dbControl.selectCard(bus.getId());
+        ObservableList<Card> tmp = dbControl.selectCard(bus.getId().toString());
         ObservableList<Card> result = FXCollections.observableArrayList();
 
         int milage = 0;

@@ -248,11 +248,11 @@ public class DBCotroller {
             rs = statement.executeQuery(sql);
 
             //обработка результатов всех запросов
-            while (rs.next()) {
-                buses.add(
-                        new Bus(rs.getString("Id_шина"), rs.getString("Стоимость_комплекта"), rs.getString("Дата_изготовления"), rs.getString("Завод_изготовитель"),
-                                rs.getString("Заводской_номер"), rs.getString("Обозначение"), rs.getString("Модель"), rs.getString("Норма_слойности")));
-            }
+//            while (rs.next()) {
+//                buses.add(
+//                        new Bus(rs.getString("Id_шина"), rs.getString("Стоимость_комплекта"), rs.getString("Дата_изготовления"), rs.getString("Завод_изготовитель"),
+//                                rs.getString("Заводской_номер"), rs.getString("Обозначение"), rs.getString("Модель"), rs.getString("Норма_слойности")));
+//            }
 
         } catch (SQLException e) {
             Dialogs.create()
