@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerPersonEditDialog">
+   <children>
+      <HBox layoutX="130.0" layoutY="225.0" prefHeight="25.0" prefWidth="192.0" spacing="25.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="8.0">
+         <children>
+            <Button fx:id="btnCancel" layoutX="198.0" layoutY="261.0" mnemonicParsing="false" onAction="#cancelClick" prefHeight="25.0" prefWidth="85.0" text="Отмена " />
+            <Button fx:id="btnSave" layoutX="259.0" layoutY="261.0" mnemonicParsing="false" onAction="#saveClick" prefHeight="25.0" prefWidth="85.0" text="Сохранить" />
+         </children>
+      </HBox>
+      <GridPane layoutX="7.0" layoutY="11.0" prefHeight="223.0" prefWidth="287.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <Label text="Автомобиль" />
+            <Label text="Шина" GridPane.rowIndex="1" />
+            <Label text="Дата установки" GridPane.rowIndex="2" />
+            <TextField fx:id="txtId" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtLastName1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Дата снятия" GridPane.rowIndex="3" />
+            <Label text="Причина снятия" GridPane.rowIndex="4" />
+            <Label text="Техническое состояние" GridPane.rowIndex="5" />
+            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="138.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.0" minWidth="10.0" prefWidth="149.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane fx:controller="controller.BatteryController" dividerPositions="0.750373692077728" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="671.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="317.0" prefWidth="441.0">
+         <children>
+            <TableView fx:id="tableBattery" focusTraversable="false" prefHeight="265.0" prefWidth="441.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="101.0" text="Id аккумулятора" />
+                <TableColumn fx:id="dateCreateColumn" prefWidth="170.0" text="Дата изготовления" />
+                  <TableColumn fx:id="factoryColumn" prefWidth="147.0" text="Завод изготовитель" />
+                  <TableColumn fx:id="garageNumberColumn" prefWidth="101.0" text="Гаражный номер" />
+                  <TableColumn fx:id="typeColumn" prefWidth="101.0" text="Тип" />
+                  <TableColumn fx:id="factoryNumberColumn" prefWidth="101.0" text="Заводской номер" />
+                  <TableColumn fx:id="costColumn" prefWidth="101.0" text="Стоимость" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Button onAction="#updateTableClick" layoutX="14.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0" text="Обновить таблицу" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
+            <Button onAction="#addBatteryClick" layoutX="167.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0" text="Добавить запись" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="167.0" />
+            <Button onAction="#editBatteryClick" layoutX="252.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0" text="Изменить запись" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="252.0" />
+            <Button onAction="#deleteBatteryClick" layoutX="337.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0" text="Удалить запись" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="337.0" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="210.0">
+         <children>
+            <Button onAction="#backToMenu" layoutX="14.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Вернуться в меню" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+            <TextField fx:id="txtId" layoutX="14.0" layoutY="27.0" prefHeight="25.0" prefWidth="138.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="27.0" />
+            <Label layoutX="14.0" layoutY="2.0" prefHeight="25.0" prefWidth="137.0" text="Id аккумулятора" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="2.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button onAction="#searchClick" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Поиск" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="65.0" />
+            <Button onAction="#createBatteryCardClick" layoutX="14.0" layoutY="105.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="138.0" text="Сформировать карточку учета" textAlignment="CENTER" wrapText="true" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>
