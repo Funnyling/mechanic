@@ -155,7 +155,7 @@ public class BusController {
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busCard.fxml"));
                 Parent root = fxmlLoader.load();
                 BusCardController controller = fxmlLoader.getController();
-                controller.refresh(selectedBus);
+                controller.initScene(selectedBus);
                 Stage stage = new Stage();
                 stage.setTitle("Карточка учета");
                 stage.setScene(new Scene(root));

@@ -17,14 +17,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class BusCardController {
-
-    private DBCotroller dbControl = new DBCotroller();
     @FXML
     private TextField txtFactory;
     @FXML
@@ -45,7 +44,6 @@ public class BusCardController {
     private TextField txtFirstMember;
     @FXML
     private TextField txtSecondMember;
-
     @FXML
     private TableView<Card> tableCard;
     @FXML
@@ -64,6 +62,14 @@ public class BusCardController {
     private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
     private BusDao busDao = ServiceLocator.getBusDaoInstance();
+
+    private String[] headers = {
+            "Модель автомобиля (прицепа), его государственный номер",
+            "Дата установки шины на колесо автомобиля",
+            "Дата снятия шины с автомобиля",
+            "Пробег шины с начала эксплуатации, км",
+            "Техническое состояние шины",
+            "Причины снятия шины с эксплутации"};
 
     private Bus bus;
 
@@ -108,7 +114,7 @@ public class BusCardController {
         XWPFUtils.appendNewRun(paragraph, "Заводской номер шины: ", 12, true, false, false);
         XWPFUtils.appendNewRun(paragraph, bus.getFactoryNumber(), 12, false, false, true);
 
-        XWPFUtils.appendNewRun(paragraph, "Дата изготавления: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, "Дата изготовления: ", 12, true, false, false);
         XWPFUtils.appendNewRun(paragraph, bus.getDateCreate(), 12, false, false, true);
 
         XWPFUtils.appendNewRun(paragraph, "Норма слойности или индекс грузоподъемности: ", 12, true, false, false);
@@ -120,7 +126,9 @@ public class BusCardController {
         XWPFUtils.appendNewRun(paragraph, "Предприятие-изготовитель шины: ", 12, true, false, false);
         XWPFUtils.appendNewRun(paragraph, bus.getFactory(), 12, false, false, true);
 
-        appendTable(document);
+        XWPFTable table = document.createTable();
+        XWPFUtils.appendTableHeader(table, headers);
+        XWPFUtils.appentTableBody(table, tableCard.getItems());
 
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.LEFT);
@@ -141,7 +149,7 @@ public class BusCardController {
         XWPFUtils.appendNewRun(paragraph, txtFirstMember.getText() + " ___________________________", 12, false, false, true);
         XWPFUtils.appendNewRun(paragraph, txtSecondMember.getText() + " ___________________________", 12, false, false, true);
 
-        File file = new File("Документ от " + nowDateString + ".docx");
+        File file = new File("Документ учета работы шины от " + nowDateString + ".docx");
         FileOutputStream out = new FileOutputStream(file);
         document.write(out);
         out.close();
@@ -152,7 +160,7 @@ public class BusCardController {
         }
     }
 
-    public void refresh(Bus bus) {
+    public void initScene(Bus bus) {
         this.bus = busDao.findById(bus.getId());
 
         txtFactory.setText(bus.getFactory());
@@ -173,28 +181,6 @@ public class BusCardController {
 
         }
         tableCard.setItems(result);
-    }
-
-    private void appendTable(XWPFDocument document) {
-        XWPFTable table = document.createTable();
-
-        XWPFTableRow headerRow = table.getRow(0);
-        headerRow.getCell(0).setText("Модель автомобиля (прицепа), его государственный номер");
-        headerRow.addNewTableCell().setText("Дата установки шины на колесо автомобиля");
-        headerRow.addNewTableCell().setText("Дата снятия шины с автомобиля");
-        headerRow.addNewTableCell().setText("Пробег шины с начала эксплуатации, км");
-        headerRow.addNewTableCell().setText("Техническое состояние шины");
-        headerRow.addNewTableCell().setText("Причины снятия шины с эксплутации");
-
-        for (Card card : tableCard.getItems()) {
-            XWPFTableRow tableRow = table.createRow();
-            tableRow.getCell(0).setText(card.getAuto());
-            tableRow.getCell(1).setText(card.getDateAdd());
-            tableRow.getCell(2).setText(card.getDateDel());
-            tableRow.getCell(3).setText(String.valueOf(card.getMilage()));
-            tableRow.getCell(4).setText(card.getState());
-            tableRow.getCell(5).setText(card.getReason());
-        }
     }
 
     private void appendNewRun(XWPFParagraph paragraph, String text, int fontSize, boolean bold,

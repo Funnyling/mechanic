@@ -53,9 +53,9 @@
          <children>
             <Label prefHeight="17.0" prefWidth="145.0" text="Председатель комиссии" />
             <Label text="Члены комиссии" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtChairman" GridPane.columnIndex="1" />
+            <TextField fx:id="txtFirstMember" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtSecondMember" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="140.0" />

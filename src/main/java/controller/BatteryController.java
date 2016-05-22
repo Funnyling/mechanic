@@ -152,6 +152,8 @@ public class BatteryController {
                 exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryCard.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
+                BatteryCardController controller = fxmlLoader.getController();
+                controller.initScene(selected);
                 Stage stage = new Stage();
                 stage.setTitle("Карточка учета");
                 stage.setScene(new Scene(root));

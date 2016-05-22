@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author ntishkevich
@@ -32,6 +33,9 @@ public class Accumulator {
 
     @Column(name = "cost")
     private Double cost;
+
+    @OneToMany(mappedBy = "accumulator", fetch = FetchType.EAGER)
+    private List<AccumulatorAuto> autoList;
 
     public Integer getId() {
         return id;
@@ -87,6 +91,14 @@ public class Accumulator {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public List<AccumulatorAuto> getAutoList() {
+        return autoList;
+    }
+
+    public void setAutoList(List<AccumulatorAuto> autoList) {
+        this.autoList = autoList;
     }
 
     @Override
