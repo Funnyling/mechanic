@@ -39,14 +39,14 @@ public class BusEditAddController {
     private void initialize() {
         if (ExportData.getInstance().editFlag == true)
             setBus();
-        else{
+        else {
             DBCotroller dbCotrol = new DBCotroller();
-            txtId.setText(""+(dbCotrol.maxId()+1)+"");
+            txtId.setText("" + (dbCotrol.maxId() + 1) + "");
         }
     }
 
     private void setBus() {
-        bus = (Bus)ExportData.getInstance().myObject;
+        bus = (Bus) ExportData.getInstance().myObject;
 
         txtId.setText(bus.getId());
         txtFactory.setText(bus.getFactory());
@@ -59,8 +59,7 @@ public class BusEditAddController {
     }
 
     @FXML
-    private void cancelClick(ActionEvent event)
-    {
+    private void cancelClick(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
@@ -81,14 +80,13 @@ public class BusEditAddController {
 
 
             DBCotroller dbCotrol = new DBCotroller();
-            if(editFlag==true){
-                String sql = "UPDATE Шина SET Стоимость_комплекта="+ bus.getCost()+
-                        ", Дата_изготовления=cast('" + bus.getDateCreate() + "' as Date), Завод_изготовитель='" + bus.getFactory()+
-                        "', Обозначение='" + bus.getIndication() + "', Модель='" + bus.getModel()+
-                        "', Заводской_номер='" + bus.getFactoryNumber() +"', Норма_слойности='" + bus.getNorm() + "' WHERE Id_шина =" + bus.getId();
+            if (editFlag == true) {
+                String sql = "UPDATE Шина SET Стоимость_комплекта=" + bus.getCost() +
+                        ", Дата_изготовления=cast('" + bus.getDateCreate() + "' as Date), Завод_изготовитель='" + bus.getFactory() +
+                        "', Обозначение='" + bus.getIndication() + "', Модель='" + bus.getModel() +
+                        "', Заводской_номер='" + bus.getFactoryNumber() + "', Норма_слойности='" + bus.getNorm() + "' WHERE Id_шина =" + bus.getId();
                 dbCotrol.update(sql);
-            }
-            else {
+            } else {
                 dbCotrol.insertBus(bus);
             }
             ((Node) (event.getSource())).getScene().getWindow().hide();

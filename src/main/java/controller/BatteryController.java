@@ -45,8 +45,7 @@ public class BatteryController {
     private ExportData exportData = ExportData.getInstance();
 
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
         // устанавливаем тип и значение которое должно хранится в колонке
         idColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("id"));
         factoryColumn.setCellValueFactory(new PropertyValueFactory<Battery, String>("factory"));
@@ -61,8 +60,7 @@ public class BatteryController {
     }
 
     @FXML
-    private void updateTableClick()
-    {
+    private void updateTableClick() {
         tableBattery.getItems().clear();
         // заполняем таблицу данными
         tableBattery.setItems(dbControl.selectBattery("SELECT Id_Аккумулятор, Cast( Стоимость as int) as Стоимость, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
@@ -71,17 +69,14 @@ public class BatteryController {
 
     //удаление записи из таблицы
     @FXML
-    private void deleteBatteryClick()
-    {
+    private void deleteBatteryClick() {
         int selectedIndex = tableBattery.getSelectionModel().getSelectedIndex();
 
-        if (selectedIndex >= 0)
-        {
+        if (selectedIndex >= 0) {
             String id = tableBattery.getItems().get(selectedIndex).getId();
-            String sql = "DELETE FROM Аккумулятор WHERE Id_Аккумулятор='"+id+"'";
+            String sql = "DELETE FROM Аккумулятор WHERE Id_Аккумулятор='" + id + "'";
             dbControl.delete(sql);
-        }
-        else {
+        } else {
             // нет выбранных записей, сэр.
             Dialogs.create()
                     .title("Предупреждение")
@@ -92,12 +87,11 @@ public class BatteryController {
     }
 
     @FXML
-    private void addBatteryClick()
-    {
+    private void addBatteryClick() {
         try {
             exportData.editFlag = false;
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryEditAdd.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Добавить аккумулятор");
             stage.setScene(new Scene(root));
@@ -111,10 +105,10 @@ public class BatteryController {
             e.printStackTrace();
         }
     }
+
     //===========================================================================================================
     @FXML
-    private void editBatteryClick()
-    {
+    private void editBatteryClick() {
         Battery selectedBattery = tableBattery.getSelectionModel().getSelectedItem();
 
         if (selectedBattery != null) {
@@ -145,8 +139,7 @@ public class BatteryController {
     }
 
     @FXML
-    private void createBatteryCardClick()
-    {
+    private void createBatteryCardClick() {
 
         Battery selectedBattery = tableBattery.getSelectionModel().getSelectedItem();
 
@@ -177,8 +170,7 @@ public class BatteryController {
     }
 
     @FXML
-    private void backToMenu(ActionEvent event)
-    {
+    private void backToMenu(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/menu.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -186,7 +178,7 @@ public class BatteryController {
             stage.setTitle("Главное меню");
             stage.setScene(new Scene(root));
             stage.show();
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
 
         } catch (Exception e) {
             Dialogs.create()
@@ -196,8 +188,7 @@ public class BatteryController {
     }
 
     @FXML
-    private void searchClick()
-    {
+    private void searchClick() {
         String id = "";
         if (txtId.getText() == null || txtId.getText().length() == 0) {
             Dialogs.create()
@@ -206,9 +197,9 @@ public class BatteryController {
         } else {
             tableBattery.getItems().clear();
             id = txtId.getText();
-            tableBattery.setItems(dbControl.selectBattery("SELECT Id_Аккумулятор, Cast( Стоимость as int) as Стоимость, Cast(Дата_изготовления as Date) as Дата_изготовления, "+
-                    "Завод_изготовитель, Тип, Заводской_номер, Гаражный_номер "+
-                    "FROM Аккумулятор WHERE Id_Аккумулятор='" + id +"'"));
+            tableBattery.setItems(dbControl.selectBattery("SELECT Id_Аккумулятор, Cast( Стоимость as int) as Стоимость, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
+                    "Завод_изготовитель, Тип, Заводской_номер, Гаражный_номер " +
+                    "FROM Аккумулятор WHERE Id_Аккумулятор='" + id + "'"));
         }
     }
 }

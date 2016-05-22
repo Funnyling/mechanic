@@ -15,7 +15,6 @@ class SpringCofiguration {
     private static final String USERNAME = "postgres";
     private static final String DRIVER = "org.postgresql.Driver";
 
-
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASS);

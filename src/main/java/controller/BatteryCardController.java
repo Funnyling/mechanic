@@ -59,7 +59,7 @@ public class BatteryCardController {
     }
 
     private void setBus() {
-        battery = (Battery)ExportData.getInstance().myObject;
+        battery = (Battery) ExportData.getInstance().myObject;
 
         txtFactory.setText(battery.getFactory());
         txtCost.setText(battery.getCost());
@@ -70,8 +70,7 @@ public class BatteryCardController {
     }
 
 
-
-    private void setTable(){
+    private void setTable() {
 
         Card card = new Card();
         autoColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("auto"));
@@ -84,19 +83,16 @@ public class BatteryCardController {
         ObservableList<Card> tmp = dbControl.selectCard(battery.getId());
         ObservableList<Card> result = FXCollections.observableArrayList();
 
-        int milage=0;
-        int i=0;
-        String tmpsts =tmp.get(i).getId();
-        for(Card b : tmp){
-            if(b.getId() == tmpsts)
-            {
-                milage+=b.getMilage();
+        int milage = 0;
+        int i = 0;
+        String tmpsts = tmp.get(i).getId();
+        for (Card b : tmp) {
+            if (b.getId() == tmpsts) {
+                milage += b.getMilage();
                 i++;
-            }
-            else
-            {
+            } else {
                 tmpsts = b.getId();
-                result.add(new Card(tmp.get(i-1).getAuto(), tmp.get(i-1).getDateAdd(),tmp.get(i-1).getDateDel(),tmp.get(i-1).getReason(),tmp.get(i-1).getState(), milage));
+                result.add(new Card(tmp.get(i - 1).getAuto(), tmp.get(i - 1).getDateAdd(), tmp.get(i - 1).getDateDel(), tmp.get(i - 1).getReason(), tmp.get(i - 1).getState(), milage));
                 milage = 0;
             }
         }
@@ -106,14 +102,11 @@ public class BatteryCardController {
     }
 
     @FXML
-    private void  openCard()
-    {
+    private void openCard() {
         File file = new File("D:\\курс 5\\9 семестр\\курсовой\\документы\\Карточка_учета_работы_АКБ.doc");
         try {
             java.awt.Desktop.getDesktop().open(file);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

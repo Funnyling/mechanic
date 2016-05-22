@@ -13,17 +13,18 @@ public class Bus {
     private String norm;
 
 
-    public Bus(String id, String cost,String dateCreate, String factory, String factoryNumber, String indication, String model,String norm) {
+    public Bus(String id, String cost, String dateCreate, String factory, String factoryNumber, String indication, String model, String norm) {
         this.id = id;
         this.cost = cost;
         this.dateCreate = dateCreate;
         this.factory = factory;
-        this.factoryNumber=factoryNumber;
-        this.indication=indication;
+        this.factoryNumber = factoryNumber;
+        this.indication = indication;
         this.model = model;
-        this.norm=norm;
+        this.norm = norm;
     }
-    public Bus(){
+
+    public Bus() {
 
     }
 

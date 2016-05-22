@@ -13,16 +13,17 @@ public class Battery {
     private String garageNumber;
 
 
-    public Battery(String id, String cost,String dateCreate, String factory, String factoryNumber, String type, String garageNumber) {
+    public Battery(String id, String cost, String dateCreate, String factory, String factoryNumber, String type, String garageNumber) {
         this.id = id;
         this.cost = cost;
         this.dateCreate = dateCreate;
         this.factory = factory;
-        this.factoryNumber=factoryNumber;
-        this.type=type;
+        this.factoryNumber = factoryNumber;
+        this.type = type;
         this.garageNumber = garageNumber;
     }
-    public Battery(){
+
+    public Battery() {
 
     }
 

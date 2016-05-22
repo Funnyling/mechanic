@@ -9,28 +9,30 @@ public class Card {
     private String dateAdd;
     private String dateDel;
     private String reason;
-    private String state;    
+    private String state;
     private int milage;
 
-    public Card(String id,String auto,String dateAdd, String dateDel, String reason, String state, int milage){
-        this.id= id;
-        this.auto= auto;
+    public Card(String id, String auto, String dateAdd, String dateDel, String reason, String state, int milage) {
+        this.id = id;
+        this.auto = auto;
         this.dateDel = dateDel;
         this.dateAdd = dateAdd;
         this.milage = milage;
         this.reason = reason;
         this.state = state;
     }
-    public Card(String auto,String dateAdd, String dateDel, String reason, String state, int milage){
 
-        this.auto= auto;
+    public Card(String auto, String dateAdd, String dateDel, String reason, String state, int milage) {
+
+        this.auto = auto;
         this.dateDel = dateDel;
         this.dateAdd = dateAdd;
         this.milage = milage;
         this.reason = reason;
         this.state = state;
     }
-    public Card(){
+
+    public Card() {
 
     }
 

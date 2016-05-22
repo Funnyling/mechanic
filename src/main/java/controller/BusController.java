@@ -21,7 +21,6 @@ import org.controlsfx.dialog.Dialogs;
 public class BusController {
     private DBCotroller dbControl = new DBCotroller();
 
-
     @FXML
     private TableView<Bus> tableBus;
     @FXML
@@ -43,12 +42,10 @@ public class BusController {
     @FXML
     private TextField txtId;
 
-
     private ExportData exportData = ExportData.getInstance();
 
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
         // устанавливаем тип и значение которое должно хранится в колонке
         idColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("id"));
         factoryColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factory"));
@@ -63,8 +60,7 @@ public class BusController {
     }
 
     @FXML
-    private void updateTableClick()
-    {
+    private void updateTableClick() {
         tableBus.getItems().clear();
         // заполняем таблицу данными
         tableBus.setItems(dbControl.selectBus("SELECT Id_шина,Cast( Стоимость_комплекта as int) as Стоимость_комплекта, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
@@ -73,17 +69,14 @@ public class BusController {
 
     //удаление записи из таблицы
     @FXML
-    private void deleteBusClick()
-    {
+    private void deleteBusClick() {
         int selectedIndex = tableBus.getSelectionModel().getSelectedIndex();
 
-        if (selectedIndex >= 0)
-        {
+        if (selectedIndex >= 0) {
             String id = tableBus.getItems().get(selectedIndex).getId();
-            String sql = "DELETE FROM Шина WHERE Id_шина='"+id+"'";
+            String sql = "DELETE FROM Шина WHERE Id_шина='" + id + "'";
             dbControl.delete(sql);
-        }
-        else {
+        } else {
             // нет выбранных записей, сэр.
             Dialogs.create()
                     .title("Предупреждение")
@@ -94,12 +87,11 @@ public class BusController {
     }
 
     @FXML
-    private void addBusClick()
-    {
+    private void addBusClick() {
         try {
             exportData.editFlag = false;
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busEditAdd.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Добавить шину");
             stage.setScene(new Scene(root));
@@ -113,10 +105,10 @@ public class BusController {
             e.printStackTrace();
         }
     }
+
     //===========================================================================================================
     @FXML
-    private void editBusClick()
-    {
+    private void editBusClick() {
         Bus selectedBus = tableBus.getSelectionModel().getSelectedItem();
 
         if (selectedBus != null) {
@@ -147,8 +139,7 @@ public class BusController {
     }
 
     @FXML
-    private void createBusCardClick()
-    {
+    private void createBusCardClick() {
 
         Bus selectedBus = tableBus.getSelectionModel().getSelectedItem();
 
@@ -179,8 +170,7 @@ public class BusController {
     }
 
     @FXML
-    private void backToMenu(ActionEvent event)
-    {
+    private void backToMenu(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/menu.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -188,7 +178,7 @@ public class BusController {
             stage.setTitle("Главное меню");
             stage.setScene(new Scene(root));
             stage.show();
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
 
         } catch (Exception e) {
             Dialogs.create()
@@ -198,20 +188,18 @@ public class BusController {
     }
 
     @FXML
-    private void searchClick()
-    {
+    private void searchClick() {
         String id = "";
         if (txtId.getText() == null || txtId.getText().length() == 0) {
             Dialogs.create()
                     .message("Введите id для поиска!\n")
                     .showWarning();
-        }
-        else {
+        } else {
             tableBus.getItems().clear();
             id = txtId.getText();
-            tableBus.setItems(dbControl.selectBus("SELECT Id_шина, Cast( Стоимость_комплекта as int) as Стоимость_комплекта, Cast(Дата_изготовления as Date) as Дата_изготовления, "+
-                    "Завод_изготовитель, Обозначение, Модель, Заводской_номер, Норма_слойности "+
-                    "FROM Шина WHERE Id_шина='" + id +"'"));
+            tableBus.setItems(dbControl.selectBus("SELECT Id_шина, Cast( Стоимость_комплекта as int) as Стоимость_комплекта, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
+                    "Завод_изготовитель, Обозначение, Модель, Заводской_номер, Норма_слойности " +
+                    "FROM Шина WHERE Id_шина='" + id + "'"));
         }
     }
 

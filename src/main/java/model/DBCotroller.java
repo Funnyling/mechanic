@@ -11,8 +11,8 @@ import java.sql.*;
  */
 public class DBCotroller {
 
-    private  String getConnectionString()  {
-        String conString="jdbc:sqlserver://localhost:1433;databaseName=mechanicDB;user=test_mechanic;password=pass1234;";
+    private String getConnectionString() {
+        String conString = "jdbc:sqlserver://localhost:1433;databaseName=mechanicDB;user=test_mechanic;password=pass1234;";
      /*   try {
             BufferedReader br = new BufferedReader(new InputStreamReader( new FileInputStream("D:\\Java\\examples\\praktika\\src\\ConnectionString")));
             conString = br.readLine();
@@ -29,7 +29,7 @@ public class DBCotroller {
         return conString;
     }
 
-    public  Connection getDBConnection() {
+    public Connection getDBConnection() {
         Connection dbConnection = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -40,7 +40,7 @@ public class DBCotroller {
         }
         try {
             String url = getConnectionString();
-            dbConnection = DriverManager.getConnection( getConnectionString());
+            dbConnection = DriverManager.getConnection(getConnectionString());
             return dbConnection;
         } catch (SQLException e) {
             Dialogs.create()
@@ -50,9 +50,8 @@ public class DBCotroller {
         return dbConnection;
     }
 
-    public int maxId()
-    {
-        int _id=0;
+    public int maxId() {
+        int _id = 0;
 
         //получение данных из файла БД
         Connection dbConnection = null; //переменная; хранит соединение с базой данных
@@ -71,15 +70,15 @@ public class DBCotroller {
                 _id = rs.getInt("Id_шина");
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             Dialogs.create()
                     .message(e.getMessage())
                     .showError();
             e.printStackTrace();
         } finally { //закрытие всех объектов, чтобы соединение с БД не осталось занимая пути...
             try {
-                if (rs!=null) rs.close();
-                if (statement!=null) statement.close();
+                if (rs != null) rs.close();
+                if (statement != null) statement.close();
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
@@ -89,7 +88,7 @@ public class DBCotroller {
         return _id;
     }
 
-    public void delete(String deleteSQL){
+    public void delete(String deleteSQL) {
 
         Connection dbConnection = null;
         Statement statement = null;
@@ -110,12 +109,13 @@ public class DBCotroller {
                     .showError();
         } finally {
             try {
-                if (statement!=null) statement.close();
-            } catch (Exception e) {}
+                if (statement != null) statement.close();
+            } catch (Exception e) {
+            }
         }
     }
 
-    public void update(String updateSQL){
+    public void update(String updateSQL) {
 
         Connection dbConnection = null;
         Statement statement = null;
@@ -137,19 +137,20 @@ public class DBCotroller {
             e.printStackTrace();
         } finally {
             try {
-                if (statement!=null) statement.close();
-            } catch (Exception e) {}
+                if (statement != null) statement.close();
+            } catch (Exception e) {
+            }
         }
     }
 
-    public void insertBus(Bus bus){
+    public void insertBus(Bus bus) {
 
-        String insertSQL = "INSERT INTO Шина "+
-                "(Id_шина, Стоимость_комплекта, Дата_изготовления, Завод_изготовитель, Обозначение, Модель, Заводской_номер, Норма_слойности)"+
-                " VALUES ('" +  bus.getId() + "', '"+ bus.getCost()+
-                "', '" + bus.getDateCreate() + "', '"+ bus.getFactory()+
-                "', '" + bus.getIndication() + "', '"+ bus.getModel()+
-                "', '" + bus.getFactoryNumber() +  "', '" + bus.getNorm()+ "')";
+        String insertSQL = "INSERT INTO Шина " +
+                "(Id_шина, Стоимость_комплекта, Дата_изготовления, Завод_изготовитель, Обозначение, Модель, Заводской_номер, Норма_слойности)" +
+                " VALUES ('" + bus.getId() + "', '" + bus.getCost() +
+                "', '" + bus.getDateCreate() + "', '" + bus.getFactory() +
+                "', '" + bus.getIndication() + "', '" + bus.getModel() +
+                "', '" + bus.getFactoryNumber() + "', '" + bus.getNorm() + "')";
 
         Connection dbConnection = null;
         Statement statement = null;
@@ -171,13 +172,13 @@ public class DBCotroller {
                     .showError();
         } finally {
             try {
-                if (statement!=null) statement.close();
-            } catch (Exception e) {}
+                if (statement != null) statement.close();
+            } catch (Exception e) {
+            }
         }
     }
 
-    public ObservableList<Card> selectCard(String id)
-    {
+    public ObservableList<Card> selectCard(String id) {
         ObservableList<Card> cards = FXCollections.observableArrayList();
 
         //получение данных из файла БД
@@ -213,15 +214,15 @@ public class DBCotroller {
                         ));
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             Dialogs.create()
                     .message(e.getMessage())
                     .showError();
             e.printStackTrace();
         } finally { //закрытие всех объектов, чтобы соединение с БД не осталось занимая пути...
             try {
-                if (rs!=null) rs.close();
-                if (statement!=null) statement.close();
+                if (rs != null) rs.close();
+                if (statement != null) statement.close();
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
@@ -231,8 +232,7 @@ public class DBCotroller {
         return cards;
     }
 
-    public ObservableList<Bus> selectBus(String sql)
-    {
+    public ObservableList<Bus> selectBus(String sql) {
         ObservableList<Bus> buses = FXCollections.observableArrayList();
 
         //получение данных из файла БД
@@ -250,19 +250,19 @@ public class DBCotroller {
             //обработка результатов всех запросов
             while (rs.next()) {
                 buses.add(
-                          new Bus(rs.getString("Id_шина"), rs.getString("Стоимость_комплекта"), rs.getString("Дата_изготовления"), rs.getString("Завод_изготовитель"),
+                        new Bus(rs.getString("Id_шина"), rs.getString("Стоимость_комплекта"), rs.getString("Дата_изготовления"), rs.getString("Завод_изготовитель"),
                                 rs.getString("Заводской_номер"), rs.getString("Обозначение"), rs.getString("Модель"), rs.getString("Норма_слойности")));
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             Dialogs.create()
                     .message(e.getMessage())
                     .showError();
-                    e.printStackTrace();
+            e.printStackTrace();
         } finally { //закрытие всех объектов, чтобы соединение с БД не осталось занимая пути...
             try {
-                if (rs!=null) rs.close();
-                if (statement!=null) statement.close();
+                if (rs != null) rs.close();
+                if (statement != null) statement.close();
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
@@ -271,8 +271,8 @@ public class DBCotroller {
         }
         return buses;
     }
-    public ObservableList<Battery> selectBattery(String sql)
-    {
+
+    public ObservableList<Battery> selectBattery(String sql) {
         ObservableList<Battery> batteries = FXCollections.observableArrayList();
 
         //получение данных из файла БД
@@ -294,15 +294,15 @@ public class DBCotroller {
                                 rs.getString("Заводской_номер"), rs.getString("Тип"), rs.getString("Гаражный_номер")));
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             Dialogs.create()
                     .message(e.getMessage())
                     .showError();
             e.printStackTrace();
         } finally { //закрытие всех объектов, чтобы соединение с БД не осталось занимая пути...
             try {
-                if (rs!=null) rs.close();
-                if (statement!=null) statement.close();
+                if (rs != null) rs.close();
+                if (statement != null) statement.close();
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
