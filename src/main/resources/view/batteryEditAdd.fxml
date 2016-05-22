@@ -22,7 +22,7 @@
             <Label text="Дата изготовления" GridPane.rowIndex="3" />
             <Label text="Тип" GridPane.rowIndex="6" />
             <Label text="Гаражный номер" GridPane.rowIndex="5" />
-            <TextField fx:id="txtId" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" />
+            <TextField fx:id="txtId" editable="false" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" />
             <TextField fx:id="txtFactory" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtType" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="txtFactoryNumber" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
