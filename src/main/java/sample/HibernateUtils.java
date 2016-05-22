@@ -5,14 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-/**
- * @author ntishkevich
- * @version 22.05.2016
- */
 public class HibernateUtils {
 
     private static final String PASS = "12345";
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=hackathon";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USERNAME = "postgres";
     private static final String DRIVER = "org.postgresql.Driver";
     private static final String DIALECT = "org.hibernate.dialect.PostgreSQL94Dialect";

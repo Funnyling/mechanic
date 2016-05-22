@@ -47,7 +47,7 @@ public class BusController {
     @FXML
     private TableColumn<Bus, String> indicationColumn;
     @FXML
-    private TextField txtId;
+    private TextField txtFactoryNumber;
 
     private ObservableList<Bus> result = FXCollections.observableArrayList();
 
@@ -65,13 +65,15 @@ public class BusController {
         factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factoryNumber"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("model"));
         indicationColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("indication"));
-        result.setAll(busDao.findAll());
-        tableBus.setItems(result);
+        refreshTable();
     }
 
     @FXML
     private void updateTableClick() {
-        tableBus.getItems().clear();
+        refreshTable();
+    }
+
+    private void refreshTable() {
         result.setAll(busDao.findAll());
         tableBus.setItems(result);
     }
@@ -97,15 +99,15 @@ public class BusController {
     @FXML
     private void addBusClick() {
         try {
-            exportData.editFlag = false;
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busEditAdd.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
+            Parent root = fxmlLoader.load();
+            BusEditAddController controller = fxmlLoader.getController();
+            controller.setEditable(Boolean.FALSE);
             Stage stage = new Stage();
             stage.setTitle("Добавить шину");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
-
+            refreshTable();
         } catch (Exception e) {
             Dialogs.create()
                     .message(e.getMessage())
@@ -120,16 +122,16 @@ public class BusController {
 
         if (selectedBus != null) {
             try {
-
-                exportData.myObject = selectedBus;
-                exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busEditAdd.fxml"));
                 Parent root = fxmlLoader.load();
+                BusEditAddController controller = fxmlLoader.getController();
+                controller.setEditable(Boolean.TRUE);
+                controller.initScene(selectedBus);
                 Stage stage = new Stage();
                 stage.setTitle("Изменить");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
-
+                refreshTable();
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
@@ -162,7 +164,6 @@ public class BusController {
                 stage.setTitle("Карточка учета");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
-
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
@@ -197,12 +198,11 @@ public class BusController {
     }
 
     @FXML
-    //todo поиск по заводскому номеру: поменять название на xml
     private void searchClick() {
-        String factoryNumber = txtId.getText();
+        String factoryNumber = txtFactoryNumber.getText();
         if (StringUtils.isEmpty(factoryNumber)) {
             Dialogs.create()
-                    .message("Введите id для поиска!\n")
+                    .message("Введите заводской номер для поиска!\n")
                     .showWarning();
         } else {
             tableBus.getItems().clear();

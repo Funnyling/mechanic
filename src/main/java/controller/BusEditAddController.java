@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import model.Bus;
 import model.DBCotroller;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.controlsfx.dialog.Dialogs;
 import sample.ServiceLocator;
 
@@ -35,28 +37,7 @@ public class BusEditAddController {
 
     private BusDao busDao = ServiceLocator.getBusDaoInstance();
 
-    @FXML
-    private void initialize() {
-        if (ExportData.getInstance().editFlag == true) {
-            setBus();
-//        else {
-//            DBCotroller dbCotrol = new DBCotroller();
-//            txtId.setText("" + (dbCotrol.maxId() + 1) + "");
-        }
-    }
-
-    private void setBus() {
-        bus = (Bus) ExportData.getInstance().myObject;
-
-        txtId.setText(bus.getId().toString());
-        txtFactory.setText(bus.getFactory());
-        txtCost.setText(bus.getCost().toString());
-        txtNorm.setText(bus.getNorm());
-        txtDateCreate.setText(bus.getDateCreate().toString());
-        txtFactoryNumber.setText(bus.getFactoryNumber());
-        txtModel.setText(bus.getModel());
-        txtIndication.setText(bus.getIndication());
-    }
+    private Boolean editable;
 
     @FXML
     private void cancelClick(ActionEvent event) {
@@ -65,8 +46,6 @@ public class BusEditAddController {
 
     @FXML
     private void saveClick(ActionEvent event) {
-        boolean editFlag = ExportData.getInstance().editFlag;
-
         if (isInputValid()) {
 
             bus.setFactory(txtFactory.getText());
@@ -77,8 +56,7 @@ public class BusEditAddController {
             bus.setModel(txtModel.getText());
             bus.setIndication(txtIndication.getText());
 
-            DBCotroller dbCotrol = new DBCotroller();
-            if (editFlag == true) {
+            if (editable) {
                 bus.setId(Integer.valueOf(txtId.getText()));
                 busDao.update(bus);
             } else {
@@ -89,33 +67,30 @@ public class BusEditAddController {
         }
     }
 
-
     // проверка корректности ввода
-
     private boolean isInputValid() {
+        StringBuilder errorMessage = new StringBuilder();
 
-        String errorMessage = "";
-
-        if (txtModel.getText() == null || txtModel.getText().length() == 0) {
-            errorMessage += "Введите модель!\n";
+        if (StringUtils.isEmpty(txtModel.getText())) {
+            errorMessage.append("Введите модель!\n");
         }
-        if (txtFactory.getText() == null || txtFactory.getText().length() == 0) {
-            errorMessage += "Введите завод изготовител!\n";
+        if (StringUtils.isEmpty(txtFactory.getText())) {
+            errorMessage.append("Введите завод изготовител!\n");
         }
-        if (txtFactoryNumber.getText() == null || txtFactoryNumber.getText().length() == 0) {
-            errorMessage += "Введите заводской номер!\n";
+        if (StringUtils.isEmpty(txtFactoryNumber.getText())) {
+            errorMessage.append("Введите заводской номер!\n");
         }
-        if (txtDateCreate.getText() == null || txtDateCreate.getText().length() == 0) {
-            errorMessage += "Введите дату изготовления!\n";
+        if (StringUtils.isEmpty(txtDateCreate.getText())) {
+            errorMessage.append("Введите дату изготовления!\n");
         }
-        if (txtNorm.getText() == null || txtNorm.getText().length() == 0) {
-            errorMessage += "Введите норму слойности!\n";
+        if (StringUtils.isEmpty(txtNorm.getText())) {
+            errorMessage.append("Введите норму слойности!\n");
         }
-        if (txtCost.getText() == null || txtCost.getText().length() == 0) {
-            errorMessage += "Введите стоимость комплекта!\n";
+        if (StringUtils.isEmpty(txtCost.getText())) {
+            errorMessage.append("Введите стоимость комплекта!\n");
         }
-        if (txtIndication.getText() == null || txtIndication.getText().length() == 0) {
-            errorMessage += "Введите обозначение!\n";
+        if (StringUtils.isEmpty(txtIndication.getText())) {
+            errorMessage.append("Введите обозначение!\n");
         }
 
         if (errorMessage.length() != 0) {
@@ -123,10 +98,28 @@ public class BusEditAddController {
             Dialogs.create()
                     .title("Предупреждение, сэр")
                     .masthead("Пожалуйста, заполните поля верно.")
-                    .message(errorMessage)
+                    .message(errorMessage.toString())
                     .showError();
             return false;
         }
         return true;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public void initScene(Bus bus) {
+        if (this.editable) {
+            this.bus = bus;
+            txtId.setText(this.bus.getId().toString());
+            txtFactory.setText(this.bus.getFactory());
+            txtCost.setText(this.bus.getCost().toString());
+            txtNorm.setText(this.bus.getNorm());
+            txtDateCreate.setText(this.bus.getDateCreate());
+            txtFactoryNumber.setText(this.bus.getFactoryNumber());
+            txtModel.setText(this.bus.getModel());
+            txtIndication.setText(this.bus.getIndication());
+        }
     }
 }
