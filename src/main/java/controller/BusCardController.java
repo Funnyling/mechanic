@@ -9,10 +9,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.*;
 import sample.DaoUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class BusCardController {
@@ -48,6 +54,8 @@ public class BusCardController {
     @FXML
     private TableColumn<Card, String> milageColumn;
 
+    private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
 
     private BusDao busDao = DaoUtils.getBusDaoInstance();
 
@@ -66,8 +74,23 @@ public class BusCardController {
     }
 
     @FXML
-    private void openCard() {
-        File file = new File("D:\\курс 5\\9 семестр\\курсовой\\документы\\Карточка_учета_работы_автомобильной_шины.doc");
+    private void openCard() throws IOException {
+        //Blank Document
+        XWPFDocument document = new XWPFDocument();
+        //Write the Document in file system
+        Date now = new Date();
+        String nowDateString = this.format.format(now);
+        XWPFParagraph paragraph = document.createParagraph();
+        paragraph.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun run = paragraph.createRun();
+        run.setBold(true);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setText("Карточка учета");
+        File file = new File("Документ от " + nowDateString + ".docx");
+        FileOutputStream out = new FileOutputStream(file);
+        document.write(out);
+        out.close();
+        System.out.println("createdocument.docx written successully");
         try {
             java.awt.Desktop.getDesktop().open(file);
         } catch (IOException e) {
@@ -77,6 +100,15 @@ public class BusCardController {
 
     public void refresh(Bus bus) {
         this.bus = busDao.findById(bus.getId());
+
+        txtFactory.setText(bus.getFactory());
+        txtCost.setText(bus.getCost().toString());
+        txtNorm.setText(bus.getNorm());
+        txtDateCreate.setText(bus.getDateCreate());
+        txtFactoryNumber.setText(bus.getFactoryNumber());
+        txtModel.setText(bus.getModel());
+        txtIndication.setText(bus.getIndication());
+
         ObservableList<Card> result = FXCollections.observableArrayList();
         for (BusAuto busAuto : bus.getBusAutoList()) {
             Auto auto = busAuto.getAuto();
