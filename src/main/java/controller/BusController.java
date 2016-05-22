@@ -66,17 +66,12 @@ public class BusController {
         factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<>("factoryNumber"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
         indicationColumn.setCellValueFactory(new PropertyValueFactory<>("indication"));
-        refreshTable(busDao.findAll());
+        refreshTable();
     }
 
     @FXML
     private void updateTableClick() {
-        refreshTable(busDao.findAll());
-    }
-
-    private void refreshTable(List<Bus> all) {
-        result.setAll();
-        tableBus.setItems(result);
+        refreshTable();
     }
 
     //удаление записи из таблицы
@@ -209,4 +204,14 @@ public class BusController {
             refreshTable(busDao.findByFactoryNumber(factoryNumber));
         }
     }
+
+    private void refreshTable(List<Bus> buses) {
+        result.setAll(buses);
+        tableBus.setItems(result);
+    }
+
+    private void refreshTable() {
+        refreshTable(busDao.findAll());
+    }
+
 }

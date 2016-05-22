@@ -93,10 +93,13 @@ public class BatteryController {
             exportData.editFlag = false;
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryEditAdd.fxml"));
             Parent root = (Parent) fxmlLoader.load();
+            BatteryEditAddController controller = fxmlLoader.getController();
+            controller.setEditable(Boolean.FALSE);
             Stage stage = new Stage();
             stage.setTitle("Добавить аккумулятор");
             stage.setScene(new Scene(root));
             stage.showAndWait();
+            refreshTable();
         } catch (Exception e) {
             Dialogs.create()
                     .message(e.getMessage())
@@ -115,11 +118,14 @@ public class BatteryController {
                 exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryEditAdd.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
+                BatteryEditAddController controller = fxmlLoader.getController();
+                controller.setEditable(Boolean.TRUE);
+                controller.initScene(selected);
                 Stage stage = new Stage();
                 stage.setTitle("Изменить");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
-
+                refreshTable();
             } catch (Exception e) {
                 Dialogs.create()
                         .message(e.getMessage())
@@ -203,7 +209,6 @@ public class BatteryController {
     }
 
     private void refreshTable() {
-        result.setAll(accumulatorDao.findAll());
-        tableBattery.setItems(result);
+        refreshTable(accumulatorDao.findAll());
     }
 }

@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="309.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BatteryCardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="309.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BatteryEditAddController">
    <children>
       <HBox layoutX="130.0" layoutY="225.0" prefHeight="25.0" prefWidth="192.0" spacing="25.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="8.0">
          <children>
@@ -17,17 +17,17 @@
             <Label text="Id аккумулятора" />
             <Label text="Завод изготовитель" GridPane.rowIndex="1" />
             <Label text="Заводской номер" GridPane.rowIndex="2" />
-            <TextField fx:id="txtId" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txtLastName1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtCost" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtNumber" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Дата изготовления" GridPane.rowIndex="3" />
             <Label text="Тип" GridPane.rowIndex="6" />
             <Label text="Гаражный номер" GridPane.rowIndex="5" />
-            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txtId1" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" />
-            <TextField fx:id="txtId2" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtId3" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="txtId4" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtId" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" />
+            <TextField fx:id="txtFactory" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtType" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtFactoryNumber" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Стоимость " GridPane.rowIndex="4" />
+            <TextField fx:id="txtCreateDate" prefHeight="25.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="138.0" />

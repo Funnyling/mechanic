@@ -82,7 +82,7 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
     public void update(Accumulator accumulator) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("update model.Accumulator set cost = :cost, createDate = :createDate, factory = :factory, " +
-                " factoryNumber = :factoryNumber, indication = :indication, model = :model where id = :id");
+                " factoryNumber = :factoryNumber, number = :number, type = :type where id = :id");
         query.setInteger("id", accumulator.getId());
         query.setDouble("cost", accumulator.getCost());
         query.setString("createDate", accumulator.getCreateDate());

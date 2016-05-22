@@ -57,7 +57,6 @@ public class BusEditAddController {
             bus.setIndication(txtIndication.getText());
 
             if (editable) {
-                bus.setId(Integer.valueOf(txtId.getText()));
                 busDao.update(bus);
             } else {
                 busDao.save(bus);

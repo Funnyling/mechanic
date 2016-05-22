@@ -49,7 +49,6 @@ public class BatteryCardController {
     @FXML
     private TableColumn<Card, String> milageColumn;
 
-
     private Battery battery = new Battery();
 
     @FXML
