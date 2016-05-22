@@ -51,41 +51,42 @@ public class DBCotroller {
     }
 
     public int maxId() {
-        int _id = 0;
-
-        //получение данных из файла БД
-        Connection dbConnection = null; //переменная; хранит соединение с базой данных
-        Statement statement = null; //переменная; хранит и выполняет sql-запросы
-        ResultSet rs = null; //переменная; получает результаты выполнения sql-запросов
-
-        try {
-            dbConnection = getDBConnection();
-            statement = dbConnection.createStatement();
-
-            //выполнение SQL запроса
-            rs = statement.executeQuery("Select MAX(Id_шина)as Id_шина From Шина");
-
-            //обработка результатов всех запросов
-            while (rs.next()) {
-                _id = rs.getInt("Id_шина");
-            }
-
-        } catch (SQLException e) {
-            Dialogs.create()
-                    .message(e.getMessage())
-                    .showError();
-            e.printStackTrace();
-        } finally { //закрытие всех объектов, чтобы соединение с БД не осталось занимая пути...
-            try {
-                if (rs != null) rs.close();
-                if (statement != null) statement.close();
-            } catch (Exception e) {
-                Dialogs.create()
-                        .message(e.getMessage())
-                        .showError();
-            }
-        }
-        return _id;
+//        int _id = 0;
+//
+//        //получение данных из файла БД
+//        Connection dbConnection = null; //переменная; хранит соединение с базой данных
+//        Statement statement = null; //переменная; хранит и выполняет sql-запросы
+//        ResultSet rs = null; //переменная; получает результаты выполнения sql-запросов
+//
+//        try {
+//            dbConnection = getDBConnection();
+//            statement = dbConnection.createStatement();
+//
+//            //выполнение SQL запроса
+//            rs = statement.executeQuery("Select MAX(Id_шина)as Id_шина From Шина");
+//
+//            //обработка результатов всех запросов
+//            while (rs.next()) {
+//                _id = rs.getInt("Id_шина");
+//            }
+//
+//        } catch (SQLException e) {
+//            Dialogs.create()
+//                    .message(e.getMessage())
+//                    .showError();
+//            e.printStackTrace();
+//        } finally { //закрытие всех объектов, чтобы соединение с БД не осталось занимая пути...
+//            try {
+//                if (rs != null) rs.close();
+//                if (statement != null) statement.close();
+//            } catch (Exception e) {
+//                Dialogs.create()
+//                        .message(e.getMessage())
+//                        .showError();
+//            }
+//        }
+//        return _id;
+        return 0;
     }
 
     public void delete(String deleteSQL) {

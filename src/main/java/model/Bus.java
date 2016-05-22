@@ -1,39 +1,40 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "bus")
 public class Bus {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
 
     @Column(name = "cost")
-    private String cost;
+    private Double cost;
 
     @Column(name = "date_create")
-    private Date dateCreate;
+    private String dateCreate;
 
-    @Column(name = "factory")
+    @Column(name = "factory", length = 50)
     private String factory;
 
-    @Column(name = "factoryNumber")
+    @Column(name = "factoryNumber", length = 10)
     private String factoryNumber;
 
     @Column(name = "indication")
     private String indication;
 
-    @Column(name = "model")
+    @Column(name = "model", length = 30)
     private String model;
 
-    @Column(name = "norm")
+    @Column(name = "norm", length = 20)
     private String norm;
+
+    @OneToMany(mappedBy = "bus")
+    private List<BusAuto> busAutoList;
 
     public Integer getId() {
         return id;
@@ -43,19 +44,19 @@ public class Bus {
         this.id = id;
     }
 
-    public String getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public Date getDateCreate() {
+    public String getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(Date dateCreate) {
+    public void setDateCreate(String dateCreate) {
         this.dateCreate = dateCreate;
     }
 
@@ -97,6 +98,14 @@ public class Bus {
 
     public void setNorm(String norm) {
         this.norm = norm;
+    }
+
+    public List<BusAuto> getBusAutoList() {
+        return busAutoList;
+    }
+
+    public void setBusAutoList(List<BusAuto> busAutoList) {
+        this.busAutoList = busAutoList;
     }
 
     @Override

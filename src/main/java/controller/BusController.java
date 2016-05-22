@@ -2,6 +2,8 @@ package controller;
 
 import dao.BusDao;
 import dao.impl.BusDaoImpl;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import model.Bus;
 import model.DBCotroller;
 import org.controlsfx.dialog.Dialogs;
+import sample.DaoUtils;
 
 /**
  * Created by Елена on 17.12.2015.
@@ -44,15 +47,14 @@ public class BusController {
     @FXML
     private TextField txtId;
 
-    private String test;
+    private ObservableList<Bus> result = FXCollections.observableArrayList();
 
-    private BusDao busDao;
+    private BusDao busDao = DaoUtils.getBusDaoInstance();
 
     private ExportData exportData = ExportData.getInstance();
 
     @FXML
     private void initialize() {
-        busDao = new BusDaoImpl();
         idColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("id"));
         factoryColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factory"));
         costColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("cost"));
@@ -61,15 +63,15 @@ public class BusController {
         factoryNumberColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("factoryNumber"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("model"));
         indicationColumn.setCellValueFactory(new PropertyValueFactory<Bus, String>("indication"));
-        test = busDao.echo();
+        result.setAll(busDao.findAll());
+        tableBus.setItems(result);
     }
 
     @FXML
     private void updateTableClick() {
         tableBus.getItems().clear();
-        // заполняем таблицу данными
-        tableBus.setItems(dbControl.selectBus("SELECT Id_шина,Cast( Стоимость_комплекта as int) as Стоимость_комплекта, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
-                "Завод_изготовитель, Обозначение, Модель, Заводской_номер, Норма_слойности FROM Шина"));
+        result.setAll(busDao.findAll());
+        tableBus.setItems(result);
     }
 
     //удаление записи из таблицы
@@ -79,8 +81,7 @@ public class BusController {
 
         if (selectedIndex >= 0) {
             Integer id = tableBus.getItems().get(selectedIndex).getId();
-            String sql = "DELETE FROM Шина WHERE Id_шина='" + id + "'";
-            dbControl.delete(sql);
+            busDao.deleteQuery(id);
         } else {
             // нет выбранных записей, сэр.
             Dialogs.create()
@@ -135,11 +136,11 @@ public class BusController {
             }
         } else {
             // Nothing selected.
-            Dialogs.create()
-                    .title("Предупреждение")
-                    .masthead("Не выбрана запись для изменения")
-                    .message("Пожалуйста, выберите шину из таблицы")
-                    .showWarning();
+//            Dialogs.create()
+//                    .title("Предупреждение")
+//                    .masthead("Не выбрана запись для изменения")
+//                    .message("Пожалуйста, выберите шину из таблицы")
+//                    .showWarning();
         }
     }
 

@@ -60,7 +60,7 @@ public class BusCardController {
         bus = (Bus) ExportData.getInstance().myObject;
 
         txtFactory.setText(bus.getFactory());
-        txtCost.setText(bus.getCost());
+        txtCost.setText(bus.getCost().toString());
         txtNorm.setText(bus.getNorm());
         txtDateCreate.setText(bus.getDateCreate().toString());
         txtFactoryNumber.setText(bus.getFactoryNumber());

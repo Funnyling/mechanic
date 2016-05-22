@@ -1,5 +1,6 @@
 package controller;
 
+import dao.BusDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import model.Bus;
 import model.DBCotroller;
 import org.controlsfx.dialog.Dialogs;
+import sample.DaoUtils;
 
 /**
  * Created by Елена on 17.12.2015.
@@ -35,13 +37,15 @@ public class BusEditAddController {
 
     private Bus bus = new Bus();
 
+    private BusDao busDao = DaoUtils.getBusDaoInstance();
+
     @FXML
     private void initialize() {
-        if (ExportData.getInstance().editFlag == true)
+        if (ExportData.getInstance().editFlag == true) {
             setBus();
-        else {
-            DBCotroller dbCotrol = new DBCotroller();
-            txtId.setText("" + (dbCotrol.maxId() + 1) + "");
+//        else {
+//            DBCotroller dbCotrol = new DBCotroller();
+//            txtId.setText("" + (dbCotrol.maxId() + 1) + "");
         }
     }
 
@@ -50,7 +54,7 @@ public class BusEditAddController {
 
         txtId.setText(bus.getId().toString());
         txtFactory.setText(bus.getFactory());
-        txtCost.setText(bus.getCost());
+        txtCost.setText(bus.getCost().toString());
         txtNorm.setText(bus.getNorm());
         txtDateCreate.setText(bus.getDateCreate().toString());
         txtFactoryNumber.setText(bus.getFactoryNumber());
@@ -69,25 +73,25 @@ public class BusEditAddController {
 
         if (isInputValid()) {
 
-            bus.setId(Integer.valueOf(txtId.getText()));
             bus.setFactory(txtFactory.getText());
-            bus.setCost(txtCost.getText());
+            bus.setCost(Double.valueOf(txtCost.getText()));
             bus.setNorm(txtNorm.getText());
-            bus.setDateCreate(null); //todo
+            bus.setDateCreate(txtDateCreate.getText());
             bus.setFactoryNumber(txtFactoryNumber.getText());
             bus.setModel(txtModel.getText());
             bus.setIndication(txtIndication.getText());
 
-
             DBCotroller dbCotrol = new DBCotroller();
             if (editFlag == true) {
-                String sql = "UPDATE Шина SET Стоимость_комплекта=" + bus.getCost() +
-                        ", Дата_изготовления=cast('" + bus.getDateCreate() + "' as Date), Завод_изготовитель='" + bus.getFactory() +
-                        "', Обозначение='" + bus.getIndication() + "', Модель='" + bus.getModel() +
-                        "', Заводской_номер='" + bus.getFactoryNumber() + "', Норма_слойности='" + bus.getNorm() + "' WHERE Id_шина =" + bus.getId();
-                dbCotrol.update(sql);
+                bus.setId(Integer.valueOf(txtId.getText()));
+//                String sql = "UPDATE Шина SET Стоимость_комплекта=" + bus.getCost() +
+//                        ", Дата_изготовления=cast('" + bus.getDateCreate() + "' as Date), Завод_изготовитель='" + bus.getFactory() +
+//                        "', Обозначение='" + bus.getIndication() + "', Модель='" + bus.getModel() +
+//                        "', Заводской_номер='" + bus.getFactoryNumber() + "', Норма_слойности='" + bus.getNorm() + "' WHERE Id_шина =" + bus.getId();
+//                dbCotrol.update(sql);
+                busDao.update(bus);
             } else {
-                dbCotrol.insertBus(bus);
+                busDao.save(bus);
             }
             ((Node) (event.getSource())).getScene().getWindow().hide();
 
