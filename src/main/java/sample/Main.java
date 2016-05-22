@@ -6,16 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import javax.sql.DataSource;
 
 public class Main extends Application {
 
-    private AnnotationConfigApplicationContext applicationContext =
-            new AnnotationConfigApplicationContext(SpringCofiguration.class);
+    private AnnotationConfigApplicationContext applicationContext;
+
+    @Override
+    public void init() throws Exception {
+        applicationContext = new AnnotationConfigApplicationContext(SpringCofiguration.class);
+        super.init();
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -25,6 +25,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        applicationContext.close();
+        super.stop();
+    }
 
     public static void main(String[] args) {
         launch(args);
