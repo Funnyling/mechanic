@@ -15,8 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Accumulator;
-import model.Battery;
-import model.DBCotroller;
 import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
 import sample.ServiceLocator;
@@ -26,7 +24,7 @@ import java.util.List;
 /**
  * Created by Елена on 20.12.2015.
  */
-public class BatteryController {
+public class BatteryController extends BaseFxController {
     @FXML
     private TableView<Accumulator> tableBattery;
     @FXML
@@ -49,8 +47,6 @@ public class BatteryController {
     private AccumulatorDao accumulatorDao = ServiceLocator.getAccumulatorDaoInstance();
 
     private ObservableList<Accumulator> result = FXCollections.observableArrayList();
-
-    private ExportData exportData = ExportData.getInstance();
 
     @FXML
     private void initialize() {
@@ -90,9 +86,8 @@ public class BatteryController {
     @FXML
     private void addBatteryClick() {
         try {
-            exportData.editFlag = false;
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryEditAdd.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             BatteryEditAddController controller = fxmlLoader.getController();
             controller.setEditable(Boolean.FALSE);
             Stage stage = new Stage();
@@ -114,10 +109,8 @@ public class BatteryController {
 
         if (selected != null) {
             try {
-                exportData.myObject = selected;
-                exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryEditAdd.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
+                Parent root = fxmlLoader.load();
                 BatteryEditAddController controller = fxmlLoader.getController();
                 controller.setEditable(Boolean.TRUE);
                 controller.initScene(selected);
@@ -148,10 +141,8 @@ public class BatteryController {
 
         if (selected != null) {
             try {
-                exportData.myObject = selected;
-                exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryCard.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
+                Parent root = fxmlLoader.load();
                 BatteryCardController controller = fxmlLoader.getController();
                 controller.initScene(selected);
                 Stage stage = new Stage();
@@ -170,24 +161,6 @@ public class BatteryController {
                     .title("Предупреждение")
                     .masthead("Не выбрана запись для формирования карточки учета")
                     .message("Пожалуйста, выберите аккумулятор из таблицы")
-                    .showWarning();
-        }
-    }
-
-    @FXML
-    private void backToMenu(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/menu.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Главное меню");
-            stage.setScene(new Scene(root));
-            stage.show();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-
-        } catch (Exception e) {
-            Dialogs.create()
-                    .message(e.getMessage())
                     .showWarning();
         }
     }

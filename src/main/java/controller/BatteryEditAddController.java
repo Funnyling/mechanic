@@ -10,9 +10,6 @@ import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
 import sample.ServiceLocator;
 
-/**
- * Created by Елена on 22.05.2016.
- */
 public class BatteryEditAddController {
     @FXML
     private TextField txtId;
@@ -64,29 +61,29 @@ public class BatteryEditAddController {
         StringBuilder errorMessage = new StringBuilder();
 
         if (StringUtils.isEmpty(txtType.getText())) {
-            errorMessage.append("Введите тип!\n");
+            errorMessage.append("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ!\n");
         }
         if (StringUtils.isEmpty(txtFactory.getText())) {
-            errorMessage.append("Введите завод изготовител!\n");
+            errorMessage.append("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!\n");
         }
         if (StringUtils.isEmpty(txtFactoryNumber.getText())) {
-            errorMessage.append("Введите заводской номер!\n");
+            errorMessage.append("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!\n");
         }
         if (StringUtils.isEmpty(txtCreateDate.getText())) {
-            errorMessage.append("Введите дату изготовления!\n");
+            errorMessage.append("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!\n");
         }
         if (StringUtils.isEmpty(txtCost.getText())) {
-            errorMessage.append("Введите стоимость комплекта!\n");
+            errorMessage.append("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!\n");
         }
         if (StringUtils.isEmpty(txtNumber.getText())) {
-            errorMessage.append("Введите гаражный номер!\n");
+            errorMessage.append("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!\n");
         }
 
         if (errorMessage.length() != 0) {
             // Show the error message.
             Dialogs.create()
-                    .title("Предупреждение, сэр")
-                    .masthead("Пожалуйста, заполните поля верно.")
+                    .title("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ")
+                    .masthead("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.")
                     .message(errorMessage.toString())
                     .showError();
             return false;

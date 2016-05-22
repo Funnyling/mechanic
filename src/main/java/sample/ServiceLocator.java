@@ -4,7 +4,6 @@ import dao.AccumulatorDao;
 import dao.BusDao;
 import dao.impl.AccumulatorDaoImpl;
 import dao.impl.BusDaoImpl;
-import model.Accumulator;
 
 public class ServiceLocator {
 
@@ -18,8 +17,8 @@ public class ServiceLocator {
     }
 
     private static class ServiceLocatorHolder {
-        static BusDao busDao;
-        static AccumulatorDao accumulatorDao;
+        BusDao busDao;
+        AccumulatorDao accumulatorDao;
 
         private ServiceLocatorHolder() {
             busDao = new BusDaoImpl();

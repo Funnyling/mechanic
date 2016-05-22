@@ -6,9 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import model.Bus;
-import model.DBCotroller;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.util.StringUtil;
 import org.controlsfx.dialog.Dialogs;
 import sample.ServiceLocator;
 

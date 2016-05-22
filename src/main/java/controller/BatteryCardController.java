@@ -1,7 +1,6 @@
 package controller;
 
 import dao.AccumulatorDao;
-import dao.BusDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,20 +14,17 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import sample.ServiceLocator;
+import util.FileUtils;
 import util.XWPFUtils;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by Елена on 19.12.2015.
  */
-public class BatteryCardController {
-
-    private DBCotroller dbControl = new DBCotroller();
+public class BatteryCardController extends BaseFxController {
     @FXML
     private TextField txtFactory;
     @FXML
@@ -41,7 +37,6 @@ public class BatteryCardController {
     private TextField txtFactoryNumber;
     @FXML
     private TextField txtGarageNumber;
-
     @FXML
     private TableView<Card> tableCard;
     @FXML
@@ -79,17 +74,17 @@ public class BatteryCardController {
 
     @FXML
     private void initialize() {
-        autoColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("auto"));
-        dateAddColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("dateAdd"));
-        dateDelColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("dateDel"));
-        reasonColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("reason"));
-        stateColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("state"));
-        milageColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("milage"));
+        autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
+        dateAddColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdd"));
+        dateDelColumn.setCellValueFactory(new PropertyValueFactory<>("dateDel"));
+        reasonColumn.setCellValueFactory(new PropertyValueFactory<>("reason"));
+        stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+        milageColumn.setCellValueFactory(new PropertyValueFactory<>("milage"));
         tableCard.setItems(null);
     }
 
     @FXML
-    private void openCard() throws IOException {
+    private void openCard() {
         Date now = new Date();
         String nowDateString = format.format(now);
 
@@ -150,14 +145,7 @@ public class BatteryCardController {
         XWPFUtils.appendNewRun(paragraph, txtSecondMember.getText() + " ___________________________", 12, false, false, true);
 
         File file = new File("Документ учета работы АКБ от " + nowDateString + ".docx");
-        FileOutputStream out = new FileOutputStream(file);
-        document.write(out);
-        out.close();
-        try {
-            java.awt.Desktop.getDesktop().open(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileUtils.saveandOpenFile(document, file);
     }
 
     public void initScene(Accumulator accumulator) {

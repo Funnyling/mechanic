@@ -4,9 +4,6 @@ import javafx.collections.ObservableList;
 import model.Card;
 import org.apache.poi.xwpf.usermodel.*;
 
-/**
- * Created by Елена on 22.05.2016.
- */
 public class XWPFUtils {
 
     public static void appendNewRun(XWPFParagraph paragraph, String text, int fontSize, boolean bold,

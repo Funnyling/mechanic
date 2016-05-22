@@ -42,7 +42,7 @@ public class BusDaoImpl implements BusDao {
             transaction.begin();
             session.delete(bus);
             transaction.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.flush();
@@ -67,7 +67,7 @@ public class BusDaoImpl implements BusDao {
             int rows = query.executeUpdate();
             transaction.commit();
             return rows;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.flush();
@@ -82,7 +82,7 @@ public class BusDaoImpl implements BusDao {
             transaction.begin();
             session.save(bus);
             transaction.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.close();
@@ -106,7 +106,7 @@ public class BusDaoImpl implements BusDao {
             transaction.begin();
             query.executeUpdate();
             transaction.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.flush();

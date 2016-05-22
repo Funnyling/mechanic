@@ -3,10 +3,6 @@ package model;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * @author ntishkevich
- * @version 22.05.2016
- */
 @Entity
 @Table(name = "employee")
 public class Employee {

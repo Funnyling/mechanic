@@ -4,9 +4,6 @@ import model.Accumulator;
 
 import java.util.List;
 
-/**
- * Created by Елена on 22.05.2016.
- */
 public interface AccumulatorDao {
     List<Accumulator> findAll();
 

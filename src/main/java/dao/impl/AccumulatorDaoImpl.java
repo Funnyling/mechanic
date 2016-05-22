@@ -8,9 +8,6 @@ import util.HibernateUtils;
 
 import java.util.List;
 
-/**
- * Created by Елена on 22.05.2016.
- */
 public class AccumulatorDaoImpl implements AccumulatorDao {
 
     private SessionFactory sessionFactory;
@@ -37,7 +34,7 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
             transaction.begin();
             session.delete(accumulator);
             transaction.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.flush();
@@ -56,7 +53,7 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
             int rows = query.executeUpdate();
             transaction.commit();
             return rows;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.flush();
@@ -72,7 +69,7 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
             transaction.begin();
             session.save(accumulator);
             transaction.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.close();
@@ -96,7 +93,7 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
             transaction.begin();
             query.executeUpdate();
             transaction.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         session.flush();

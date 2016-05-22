@@ -3,10 +3,8 @@ package controller;
 import dao.BusDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -15,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Bus;
-import model.DBCotroller;
 import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
 import sample.ServiceLocator;
@@ -26,9 +23,7 @@ import java.util.List;
 /**
  * Created by Елена on 17.12.2015.
  */
-public class BusController {
-    private DBCotroller dbControl = new DBCotroller();
-
+public class BusController extends BaseFxController {
     @FXML
     private TableView<Bus> tableBus;
     @FXML
@@ -53,8 +48,6 @@ public class BusController {
     private ObservableList<Bus> result = FXCollections.observableArrayList();
 
     private BusDao busDao = ServiceLocator.getBusDaoInstance();
-
-    private ExportData exportData = ExportData.getInstance();
 
     @FXML
     private void initialize() {
@@ -145,13 +138,10 @@ public class BusController {
 
     @FXML
     private void createBusCardClick() throws IOException {
-
         Bus selectedBus = tableBus.getSelectionModel().getSelectedItem();
 
         if (selectedBus != null) {
             try {
-                exportData.myObject = selectedBus;
-                exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busCard.fxml"));
                 Parent root = fxmlLoader.load();
                 BusCardController controller = fxmlLoader.getController();
@@ -171,24 +161,6 @@ public class BusController {
                     .title("Предупреждение")
                     .masthead("Не выбрана запись для формирования карточки учета")
                     .message("Пожалуйста, выберите шину из таблицы")
-                    .showWarning();
-        }
-    }
-
-    @FXML
-    private void backToMenu(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/menu.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Главное меню");
-            stage.setScene(new Scene(root));
-            stage.show();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-
-        } catch (Exception e) {
-            Dialogs.create()
-                    .message(e.getMessage())
                     .showWarning();
         }
     }

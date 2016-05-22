@@ -2,10 +2,6 @@ package model;
 
 import javax.persistence.*;
 
-/**
- * @author ntishkevich
- * @version 22.05.2016
- */
 @Entity
 @Table(name = "accumulator_auto")
 public class AccumulatorAuto {

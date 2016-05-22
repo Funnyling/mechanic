@@ -13,7 +13,6 @@ import javafx.stage.Stage;
  */
 public class MenuController {
     private Stage stage = new Stage();
-
     @FXML
     private void openBus(ActionEvent event) {
         try {

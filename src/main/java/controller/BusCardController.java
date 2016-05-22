@@ -9,19 +9,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
 import sample.ServiceLocator;
+import util.FileUtils;
 import util.XWPFUtils;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 public class BusCardController {
     @FXML
@@ -69,19 +68,19 @@ public class BusCardController {
             "Дата снятия шины с автомобиля",
             "Пробег шины с начала эксплуатации, км",
             "Техническое состояние шины",
-            "Причины снятия шины с эксплутации"};
+            "Причины снятия шины с эксплуатации"};
 
     private Bus bus;
 
     @FXML
     private void initialize() {
 
-        autoColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("auto"));
-        dateAddColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("dateAdd"));
-        dateDelColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("dateDel"));
-        reasonColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("reason"));
-        stateColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("state"));
-        milageColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("milage"));
+        autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
+        dateAddColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdd"));
+        dateDelColumn.setCellValueFactory(new PropertyValueFactory<>("dateDel"));
+        reasonColumn.setCellValueFactory(new PropertyValueFactory<>("reason"));
+        stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+        milageColumn.setCellValueFactory(new PropertyValueFactory<>("milage"));
         tableCard.setItems(null);
     }
 
@@ -150,14 +149,7 @@ public class BusCardController {
         XWPFUtils.appendNewRun(paragraph, txtSecondMember.getText() + " ___________________________", 12, false, false, true);
 
         File file = new File("Документ учета работы шины от " + nowDateString + ".docx");
-        FileOutputStream out = new FileOutputStream(file);
-        document.write(out);
-        out.close();
-        try {
-            java.awt.Desktop.getDesktop().open(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileUtils.saveandOpenFile(document, file);
     }
 
     public void initScene(Bus bus) {
@@ -181,19 +173,5 @@ public class BusCardController {
 
         }
         tableCard.setItems(result);
-    }
-
-    private void appendNewRun(XWPFParagraph paragraph, String text, int fontSize, boolean bold,
-                              boolean needUnderline, boolean needBreak) {
-        XWPFRun run = paragraph.createRun();
-        run.setFontSize(fontSize);
-        run.setBold(bold);
-        run.setText(text);
-        if (needUnderline) {
-            run.setUnderline(UnderlinePatterns.SINGLE);
-        }
-        if (needBreak) {
-            run.addBreak();
-        }
     }
 }
