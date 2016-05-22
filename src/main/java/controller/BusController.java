@@ -1,7 +1,6 @@
 package controller;
 
 import dao.BusDao;
-import dao.impl.BusDaoImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +18,7 @@ import model.Bus;
 import model.DBCotroller;
 import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
-import sample.DaoUtils;
+import sample.ServiceLocator;
 
 import java.io.IOException;
 
@@ -52,7 +51,7 @@ public class BusController {
 
     private ObservableList<Bus> result = FXCollections.observableArrayList();
 
-    private BusDao busDao = DaoUtils.getBusDaoInstance();
+    private BusDao busDao = ServiceLocator.getBusDaoInstance();
 
     private ExportData exportData = ExportData.getInstance();
 

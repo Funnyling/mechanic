@@ -9,12 +9,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
-import sample.DaoUtils;
+import sample.ServiceLocator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -57,7 +55,7 @@ public class BusCardController {
     private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
 
-    private BusDao busDao = DaoUtils.getBusDaoInstance();
+    private BusDao busDao = ServiceLocator.getBusDaoInstance();
 
     private Bus bus;
 
