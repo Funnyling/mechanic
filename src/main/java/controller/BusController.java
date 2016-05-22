@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Bus;
 import model.DBCotroller;
+import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
 import sample.DaoUtils;
 
@@ -112,7 +113,6 @@ public class BusController {
         }
     }
 
-    //===========================================================================================================
     @FXML
     private void editBusClick() {
         Bus selectedBus = tableBus.getSelectionModel().getSelectedItem();
@@ -123,7 +123,7 @@ public class BusController {
                 exportData.myObject = selectedBus;
                 exportData.editFlag = true;
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busEditAdd.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
+                Parent root = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setTitle("Изменить");
                 stage.setScene(new Scene(root));
@@ -136,11 +136,11 @@ public class BusController {
             }
         } else {
             // Nothing selected.
-//            Dialogs.create()
-//                    .title("Предупреждение")
-//                    .masthead("Не выбрана запись для изменения")
-//                    .message("Пожалуйста, выберите шину из таблицы")
-//                    .showWarning();
+            Dialogs.create()
+                    .title("Предупреждение")
+                    .masthead("Не выбрана запись для изменения")
+                    .message("Пожалуйста, выберите шину из таблицы")
+                    .showWarning();
         }
     }
 
@@ -194,18 +194,17 @@ public class BusController {
     }
 
     @FXML
+    //todo поиск по заводскому номеру: поменять название на xml
     private void searchClick() {
-        String id = "";
-        if (txtId.getText() == null || txtId.getText().length() == 0) {
+        String factoryNumber = txtId.getText();
+        if (StringUtils.isEmpty(factoryNumber)) {
             Dialogs.create()
                     .message("Введите id для поиска!\n")
                     .showWarning();
         } else {
             tableBus.getItems().clear();
-            id = txtId.getText();
-            tableBus.setItems(dbControl.selectBus("SELECT Id_шина, Cast( Стоимость_комплекта as int) as Стоимость_комплекта, Cast(Дата_изготовления as Date) as Дата_изготовления, " +
-                    "Завод_изготовитель, Обозначение, Модель, Заводской_номер, Норма_слойности " +
-                    "FROM Шина WHERE Id_шина='" + id + "'"));
+            result.setAll(busDao.findByFactoryNumber(factoryNumber));
+            tableBus.setItems(result);
         }
     }
 }

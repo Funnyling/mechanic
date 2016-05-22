@@ -2,10 +2,8 @@ package dao.impl;
 
 import dao.BusDao;
 import model.Bus;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 import sample.HibernateUtils;
 
 import java.sql.SQLException;
@@ -26,6 +24,16 @@ public class BusDaoImpl implements BusDao {
         List<Bus> buses = session.createQuery("from model.Bus").list();
         session.close();
         return buses;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Bus> findByFactoryNumber(String factoryNumber) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Bus.class);
+        criteria.add(Restrictions.like("factoryNumber", "%" + factoryNumber + "%"));
+        List<Bus> result = criteria.list();
+        session.close();
+        return result;
     }
 
     public void delete(Integer busId) {

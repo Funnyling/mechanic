@@ -15,4 +15,6 @@ public interface BusDao {
     void save(Bus bus);
 
     void update(Bus bus);
+
+    List<Bus> findByFactoryNumber(String factoryNumber);
 }
