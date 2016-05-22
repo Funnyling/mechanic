@@ -4,11 +4,9 @@ import dao.BusDao;
 import model.Bus;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
-import sample.HibernateUtils;
+import util.HibernateUtils;
 
-import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class BusDaoImpl implements BusDao {
 

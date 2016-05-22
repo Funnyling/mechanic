@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import org.apache.poi.xwpf.usermodel.*;
 import sample.ServiceLocator;
+import util.XWPFUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,164 +81,65 @@ public class BusCardController {
 
     @FXML
     private void openCard() throws IOException {
-        //Blank Document
-        XWPFDocument document = new XWPFDocument();
-        //Write the Document in file system
         Date now = new Date();
         String nowDateString = format.format(now);
+
+        XWPFDocument document = new XWPFDocument();
+
         XWPFParagraph paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.CENTER);
-        XWPFRun run = paragraph.createRun();
-        run.setFontSize(16);
-        run.setBold(true);
-        run.setText("Карточка учета");
-        run.addBreak();
 
-        run = paragraph.createRun();
-        run.setFontSize(16);
-        run.setBold(true);
-        run.setText("работы автомобильной шины");
-        run.addBreak();
-
-        run = paragraph.createRun();
-        run.setFontSize(14);
-        run.setUnderline(UnderlinePatterns.SINGLE);
-        run.setText(nowDateString);
+        XWPFUtils.appendNewRun(paragraph, "Карточка учета", 16, true, false, true);
+        XWPFUtils.appendNewRun(paragraph, "работы автомобильной шины", 16, true, false, true);
+        XWPFUtils.appendNewRun(paragraph, nowDateString, 14, false, true, false);
 
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.LEFT);
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Наименование организации: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText("ОАО Ольса");
-        run.addBreak();
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Обозначение шины: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(bus.getIndication());
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Наименование организации: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, "ОАО Ольса", 12, false, false, true);
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Модель шины: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(bus.getModel());
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Обозначение шины: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, bus.getIndication(), 12, false, false, true);
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Заводской номер шины: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(bus.getFactoryNumber());
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Модель шины: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, bus.getModel(), 12, false, false, true);
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Дата изготавления: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(bus.getDateCreate());
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Заводской номер шины: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, bus.getFactoryNumber(), 12, false, false, true);
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Норма слойности или индекс грузоподъемности: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(bus.getNorm());
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Дата изготавления: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, bus.getDateCreate(), 12, false, false, true);
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Стоимость комплекта шин: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(bus.getCost() + " руб.");
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Норма слойности или индекс грузоподъемности: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, bus.getNorm() + " руб.", 12, false, false, true);
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Предприятие-изготовитель шины: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(bus.getFactory());
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Стоимость комплекта шин: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, bus.getCost() + " руб.", 12, false, false, true);
 
-        XWPFTable table = document.createTable();
+        XWPFUtils.appendNewRun(paragraph, "Предприятие-изготовитель шины: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, bus.getFactory(), 12, false, false, true);
 
-        XWPFTableRow headerRow = table.getRow(0);
-        headerRow.getCell(0).setText("Модель автомобиля (прицепа), его государственный номер");
-        headerRow.addNewTableCell().setText("Дата установки шины на колесо автомобиля");
-        headerRow.addNewTableCell().setText("Дата снятия шины с автомобиля");
-        headerRow.addNewTableCell().setText("Пробег шины с начала эксплуатации, км");
-        headerRow.addNewTableCell().setText("Техническое состояние шины");
-        headerRow.addNewTableCell().setText("Причины снятия шины с эксплутации");
-
-        for (Card card : tableCard.getItems()) {
-            XWPFTableRow tableRow = table.createRow();
-            tableRow.getCell(0).setText(card.getAuto());
-            tableRow.getCell(1).setText(card.getDateAdd());
-            tableRow.getCell(2).setText(card.getDateDel());
-            tableRow.getCell(3).setText(String.valueOf(card.getMilage()));
-            tableRow.getCell(4).setText(card.getState());
-            tableRow.getCell(5).setText(card.getReason());
-        }
+        appendTable(document);
 
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.LEFT);
-        run = paragraph.createRun();
-        run.addBreak();
-        run.setFontSize(12);
-        run.setText("Заключение комиссии по определению пригодности шины к эксплуатации");
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Заключение комиссии по определению пригодности шины к эксплуатации", 12,
+                false, false, true);
 
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.LEFT);
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setText("______________________________________________________________________________");
+        XWPFUtils.appendNewRun(paragraph, "______________________________________________________________________________",
+                12, false, false, false);
 
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.RIGHT);
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Председатель комиссии: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(txtChairman.getText() + " ___________________________");
-        run.addBreak();
+        XWPFUtils.appendNewRun(paragraph, "Председатель комиссии: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, txtChairman.getText() + " ___________________________", 12, false, false, true);
 
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run.setText("Члены комиссии: ");
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(txtFirstMember.getText() + " ___________________________");
-        run.addBreak();
-
-        run = paragraph.createRun();
-        run.setFontSize(12);
-        run.setBold(true);
-        run = paragraph.createRun();
-        run.setBold(false);
-        run.setText(txtFirstMember.getText() + " ___________________________");
+        XWPFUtils.appendNewRun(paragraph, "Члены комиссии: ", 12, true, false, false);
+        XWPFUtils.appendNewRun(paragraph, txtFirstMember.getText() + " ___________________________", 12, false, false, true);
+        XWPFUtils.appendNewRun(paragraph, txtSecondMember.getText() + " ___________________________", 12, false, false, true);
 
         File file = new File("Документ от " + nowDateString + ".docx");
         FileOutputStream out = new FileOutputStream(file);
@@ -271,5 +173,41 @@ public class BusCardController {
 
         }
         tableCard.setItems(result);
+    }
+
+    private void appendTable(XWPFDocument document) {
+        XWPFTable table = document.createTable();
+
+        XWPFTableRow headerRow = table.getRow(0);
+        headerRow.getCell(0).setText("Модель автомобиля (прицепа), его государственный номер");
+        headerRow.addNewTableCell().setText("Дата установки шины на колесо автомобиля");
+        headerRow.addNewTableCell().setText("Дата снятия шины с автомобиля");
+        headerRow.addNewTableCell().setText("Пробег шины с начала эксплуатации, км");
+        headerRow.addNewTableCell().setText("Техническое состояние шины");
+        headerRow.addNewTableCell().setText("Причины снятия шины с эксплутации");
+
+        for (Card card : tableCard.getItems()) {
+            XWPFTableRow tableRow = table.createRow();
+            tableRow.getCell(0).setText(card.getAuto());
+            tableRow.getCell(1).setText(card.getDateAdd());
+            tableRow.getCell(2).setText(card.getDateDel());
+            tableRow.getCell(3).setText(String.valueOf(card.getMilage()));
+            tableRow.getCell(4).setText(card.getState());
+            tableRow.getCell(5).setText(card.getReason());
+        }
+    }
+
+    private void appendNewRun(XWPFParagraph paragraph, String text, int fontSize, boolean bold,
+                              boolean needUnderline, boolean needBreak) {
+        XWPFRun run = paragraph.createRun();
+        run.setFontSize(fontSize);
+        run.setBold(bold);
+        run.setText(text);
+        if (needUnderline) {
+            run.setUnderline(UnderlinePatterns.SINGLE);
+        }
+        if (needBreak) {
+            run.addBreak();
+        }
     }
 }

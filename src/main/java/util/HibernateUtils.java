@@ -1,4 +1,4 @@
-package sample;
+package util;
 
 import model.*;
 import org.hibernate.Session;
@@ -15,7 +15,7 @@ public class HibernateUtils {
 
     private static SessionFactory sessionFactory;
 
-    static void setUpSession() {
+    public static void setUpSession() {
         try {
             Configuration cfg = new Configuration()
                     .addAnnotatedClass(Bus.class)
@@ -43,7 +43,7 @@ public class HibernateUtils {
         return sessionFactory;
     }
 
-    static void closeSessionFactory() {
+    public static void closeSessionFactory() {
         sessionFactory.close();
     }
 }

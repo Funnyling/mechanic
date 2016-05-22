@@ -2,7 +2,7 @@ package dao.impl;
 
 import dao.AccumulatorDao;
 import org.hibernate.SessionFactory;
-import sample.HibernateUtils;
+import util.HibernateUtils;
 
 /**
  * Created by Елена on 22.05.2016.
