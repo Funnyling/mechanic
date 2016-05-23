@@ -3,7 +3,7 @@ package model;
 /**
  * Created by Елена on 18.12.2015.
  */
-public class Card {
+public class DocumentDto {
     private String id;
     private String auto;
     private String dateAdd;
@@ -12,7 +12,7 @@ public class Card {
     private String state;
     private int milage;
 
-    public Card(String id, String auto, String dateAdd, String dateDel, String reason, String state, int milage) {
+    public DocumentDto(String id, String auto, String dateAdd, String dateDel, String reason, String state, int milage) {
         this.id = id;
         this.auto = auto;
         this.dateDel = dateDel;
@@ -22,7 +22,7 @@ public class Card {
         this.state = state;
     }
 
-    public Card(String auto, String dateAdd, String dateDel, String reason, String state, int milage) {
+    public DocumentDto(String auto, String dateAdd, String dateDel, String reason, String state, int milage) {
 
         this.auto = auto;
         this.dateDel = dateDel;
@@ -32,7 +32,7 @@ public class Card {
         this.state = state;
     }
 
-    public Card() {
+    public DocumentDto() {
 
     }
 

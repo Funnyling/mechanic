@@ -44,19 +44,19 @@ public class BusCardController {
     @FXML
     private TextField txtSecondMember;
     @FXML
-    private TableView<Card> tableCard;
+    private TableView<DocumentDto> tableCard;
     @FXML
-    private TableColumn<Card, String> autoColumn;
+    private TableColumn<DocumentDto, String> autoColumn;
     @FXML
-    private TableColumn<Card, String> dateAddColumn;
+    private TableColumn<DocumentDto, String> dateAddColumn;
     @FXML
-    private TableColumn<Card, String> dateDelColumn;
+    private TableColumn<DocumentDto, String> dateDelColumn;
     @FXML
-    private TableColumn<Card, String> reasonColumn;
+    private TableColumn<DocumentDto, String> reasonColumn;
     @FXML
-    private TableColumn<Card, String> stateColumn;
+    private TableColumn<DocumentDto, String> stateColumn;
     @FXML
-    private TableColumn<Card, String> milageColumn;
+    private TableColumn<DocumentDto, String> milageColumn;
 
     private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -74,7 +74,6 @@ public class BusCardController {
 
     @FXML
     private void initialize() {
-
         autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
         dateAddColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdd"));
         dateDelColumn.setCellValueFactory(new PropertyValueFactory<>("dateDel"));
@@ -127,7 +126,7 @@ public class BusCardController {
 
         XWPFTable table = document.createTable();
         XWPFUtils.appendTableHeader(table, headers);
-        XWPFUtils.appentTableBody(table, tableCard.getItems());
+        XWPFUtils.appendTableBody(table, tableCard.getItems());
 
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.LEFT);
@@ -163,12 +162,12 @@ public class BusCardController {
         txtModel.setText(bus.getModel());
         txtIndication.setText(bus.getIndication());
 
-        ObservableList<Card> result = FXCollections.observableArrayList();
+        ObservableList<DocumentDto> result = FXCollections.observableArrayList();
         for (BusAuto busAuto : bus.getBusAutoList()) {
             Auto auto = busAuto.getAuto();
             Double mileage = auto.getTrips().stream().mapToDouble(Trip::getMileage).sum();
             String autoNumber = auto.getGosNumber() + ", " + auto.getNumber() + ", " + auto.getModel();
-            result.add(new Card(bus.getId().toString(), autoNumber, busAuto.getStartDate(), busAuto.getEndDate(),
+            result.add(new DocumentDto(bus.getId().toString(), autoNumber, busAuto.getStartDate(), busAuto.getEndDate(),
                     busAuto.getReason(), busAuto.getCondition(), mileage.intValue()));
 
         }

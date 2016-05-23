@@ -38,19 +38,19 @@ public class BatteryCardController extends BaseFxController {
     @FXML
     private TextField txtGarageNumber;
     @FXML
-    private TableView<Card> tableCard;
+    private TableView<DocumentDto> tableCard;
     @FXML
-    private TableColumn<Card, String> autoColumn;
+    private TableColumn<DocumentDto, String> autoColumn;
     @FXML
-    private TableColumn<Card, String> dateAddColumn;
+    private TableColumn<DocumentDto, String> dateAddColumn;
     @FXML
-    private TableColumn<Card, String> dateDelColumn;
+    private TableColumn<DocumentDto, String> dateDelColumn;
     @FXML
-    private TableColumn<Card, String> reasonColumn;
+    private TableColumn<DocumentDto, String> reasonColumn;
     @FXML
-    private TableColumn<Card, String> stateColumn;
+    private TableColumn<DocumentDto, String> stateColumn;
     @FXML
-    private TableColumn<Card, String> milageColumn;
+    private TableColumn<DocumentDto, String> milageColumn;
     @FXML
     private TextField txtChairman;
     @FXML
@@ -123,7 +123,7 @@ public class BatteryCardController extends BaseFxController {
 
         XWPFTable table = document.createTable();
         XWPFUtils.appendTableHeader(table, headers);
-        XWPFUtils.appentTableBody(table, tableCard.getItems());
+        XWPFUtils.appendTableBody(table, tableCard.getItems());
 
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.LEFT);
@@ -158,12 +158,12 @@ public class BatteryCardController extends BaseFxController {
         txtFactoryNumber.setText(this.accumulator.getFactoryNumber());
         txtGarageNumber.setText(this.accumulator.getNumber());
 
-        ObservableList<Card> result = FXCollections.observableArrayList();
+        ObservableList<DocumentDto> result = FXCollections.observableArrayList();
         for (AccumulatorAuto accumulatorAuto : accumulator.getAutoList()) {
             Auto auto = accumulatorAuto.getAuto();
             Double mileage = auto.getTrips().stream().mapToDouble(Trip::getMileage).sum();
             String autoNumber = auto.getGosNumber() + ", " + auto.getNumber() + ", " + auto.getModel();
-            result.add(new Card(accumulator.getId().toString(), autoNumber, accumulatorAuto.getStartDate(),
+            result.add(new DocumentDto(accumulator.getId().toString(), autoNumber, accumulatorAuto.getStartDate(),
                     accumulatorAuto.getEndDate(),  accumulatorAuto.getReason(), accumulatorAuto.getCondition(),
                     mileage.intValue()));
 

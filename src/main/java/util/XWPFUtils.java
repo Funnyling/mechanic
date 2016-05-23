@@ -1,7 +1,7 @@
 package util;
 
 import javafx.collections.ObservableList;
-import model.Card;
+import model.DocumentDto;
 import org.apache.poi.xwpf.usermodel.*;
 
 public class XWPFUtils {
@@ -30,15 +30,15 @@ public class XWPFUtils {
         headerRow.addNewTableCell().setText(headers[5]);
     }
 
-    public static void appentTableBody(XWPFTable table, ObservableList<Card> items) {
-        for (Card card : items) {
+    public static void appendTableBody(XWPFTable table, ObservableList<DocumentDto> items) {
+        for (DocumentDto documentDto : items) {
             XWPFTableRow tableRow = table.createRow();
-            tableRow.getCell(0).setText(card.getAuto());
-            tableRow.getCell(1).setText(card.getDateAdd());
-            tableRow.getCell(2).setText(card.getDateDel());
-            tableRow.getCell(3).setText(String.valueOf(card.getMilage()));
-            tableRow.getCell(4).setText(card.getState());
-            tableRow.getCell(5).setText(card.getReason());
+            tableRow.getCell(0).setText(documentDto.getAuto());
+            tableRow.getCell(1).setText(documentDto.getDateAdd());
+            tableRow.getCell(2).setText(documentDto.getDateDel());
+            tableRow.getCell(3).setText(String.valueOf(documentDto.getMilage()));
+            tableRow.getCell(4).setText(documentDto.getState());
+            tableRow.getCell(5).setText(documentDto.getReason());
         }
     }
 }
