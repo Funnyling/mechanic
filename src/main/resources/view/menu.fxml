@@ -29,11 +29,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Автомобили" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Button>
+            <Button fx:id="btnAuto" mnemonicParsing="false" onAction="#openAuto" prefHeight="25.0" prefWidth="170.0" text="Автомобили" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
             <Button fx:id="btnBattery" onAction="#openBattery" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Аккумуляторы" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <Button mnemonicParsing="false" prefWidth="170.0" text="Аккумуляторы на авто" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Button mnemonicParsing="false" prefWidth="170.0" text="Рейсы" GridPane.halignment="CENTER" GridPane.rowIndex="4" />

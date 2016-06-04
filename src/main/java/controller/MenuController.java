@@ -45,6 +45,20 @@ public class MenuController {
     }
 
     @FXML
+    private void openAuto(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/autoView.fxml"));
+            Parent root = fxmlLoader.load();
+            stage.setTitle("Информация об автомобилях");
+            stage.setScene(new Scene(root));
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
     private void exitClick(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();
     }
