@@ -26,12 +26,22 @@ public class ServiceLocator {
         return instance.employeeDao;
     }
 
+    public static BusAutoDao getBusAutoDaoInstance() {
+        return instance.busAutoDao;
+    }
+
+    public static AccumulatorAutoDao getAccumulatorAutoDaoInstance() {
+        return instance.accumulatorAutoDao;
+    }
+
     private static class ServiceLocatorHolder {
         BusDao busDao;
         AccumulatorDao accumulatorDao;
         AutoDao autoDao;
         TripDao tripDao;
         EmployeeDao employeeDao;
+        BusAutoDao busAutoDao;
+        AccumulatorAutoDao accumulatorAutoDao;
 
         private ServiceLocatorHolder() {
             busDao = new BusDaoImpl();
@@ -39,6 +49,8 @@ public class ServiceLocator {
             autoDao = new AutoDaoImpl();
             tripDao = new TripDaoImpl();
             employeeDao = new EmployeeDaoImpl();
+            busAutoDao = new BusAutoDaoImpl();
+            accumulatorAutoDao = new AccumulatorAutoDaoImpl();
         }
     }
 }

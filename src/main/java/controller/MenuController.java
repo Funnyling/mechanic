@@ -15,69 +15,44 @@ public class MenuController {
     private Stage stage = new Stage();
     @FXML
     private void openBus(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busView.fxml"));
-            Parent root = fxmlLoader.load();
-            stage.setTitle("Информация о шинах");
-            stage.setScene(new Scene(root));
-            stage.show();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        buildScene(event, "../view/busView.fxml", "Информация о шинах");
     }
 
     @FXML
     private void openBattery(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/batteryView.fxml"));
-            Parent root = fxmlLoader.load();
-            stage.setTitle("Информация об аккумуляторах");
-            stage.setScene(new Scene(root));
-            stage.show();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        buildScene(event, "../view/batteryView.fxml", "Информация об аккумуляторах");
     }
 
     @FXML
     private void openAuto(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/autoView.fxml"));
-            Parent root = fxmlLoader.load();
-            stage.setTitle("Информация об автомобилях");
-            stage.setScene(new Scene(root));
-            stage.show();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        buildScene(event, "../view/autoView.fxml", "Информация об автомобилях");
     }
 
     @FXML
     private void openTrip(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/tripView.fxml"));
-            Parent root = fxmlLoader.load();
-            stage.setTitle("Информация о рейсах");
-            stage.setScene(new Scene(root));
-            stage.show();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        buildScene(event, "../view/tripView.fxml", "Информация о рейсах");
     }
 
     @FXML
     private void openEmployee(ActionEvent event) {
+        buildScene(event, "../view/personView.fxml", "Информация о сотрудниках");
+    }
+
+    @FXML
+    private void openBusAuto(ActionEvent event) {
+        buildScene(event, "../view/busAutoView.fxml", "Шины на авто");
+    }
+
+    @FXML
+    private void openBatteryAuto(ActionEvent event) {
+        buildScene(event, "../view/batteryAutoView.fxml", " Аккамуляторы на авто");
+    }
+
+    private void buildScene(ActionEvent event, String fxmlPath, String stageTitle) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/personView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(fxmlPath));
             Parent root = fxmlLoader.load();
-            stage.setTitle("Информация о сотрудниках");
+            stage.setTitle(stageTitle);
             stage.setScene(new Scene(root));
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();

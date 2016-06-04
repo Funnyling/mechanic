@@ -5,39 +5,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0"
+<SplitPane fx:controller="controller.BusAutoController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0"
            prefWidth="651.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="317.0" prefWidth="441.0">
             <children>
-                <TableView focusTraversable="false" prefHeight="265.0" prefWidth="441.0" tableMenuButtonVisible="true"
+                <TableView fx:id="tableBusAuto" focusTraversable="false" prefHeight="265.0" prefWidth="441.0" tableMenuButtonVisible="true"
                            AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                            AnchorPane.topAnchor="0.0">
                     <columns>
-                        <TableColumn prefWidth="101.0" text="Id авто"/>
-                        <TableColumn prefWidth="101.0" text="Id шины"/>
-                        <TableColumn prefWidth="170.0" text="Дата установки"/>
-                        <TableColumn prefWidth="101.0" text="Дата снятия"/>
-                        <TableColumn prefWidth="147.0" text="Причина снятия"/>
-                        <TableColumn prefWidth="101.0" text="Тех. состояние"/>
+                        <TableColumn fx:id="idColumn" prefWidth="101.0" text="Id"/>
+                        <TableColumn fx:id="autoNumberColumn" prefWidth="101.0" text="Номер автомобиля"/>
+                        <TableColumn fx:id="busFactoryNumberColuumn" prefWidth="101.0" text="Заводской номер шины"/>
+                        <TableColumn fx:id="startDateColumn" prefWidth="170.0" text="Дата установки"/>
+                        <TableColumn fx:id="endDateColumn" prefWidth="101.0" text="Дата снятия"/>
+                        <TableColumn fx:id="reasonColumn" prefWidth="147.0" text="Причина снятия"/>
+                        <TableColumn fx:id="conditionColumn" prefWidth="101.0" text="Тех. состояние"/>
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                 </TableView>
-                <Button layoutX="14.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0"
+                <Button onAction="#updateTable" layoutX="14.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0"
                         text="Обновить таблицу" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0"
                         AnchorPane.leftAnchor="14.0"/>
-                <Button layoutX="167.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0"
-                        text="Добавить запись" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0"
-                        AnchorPane.leftAnchor="167.0"/>
-                <Button layoutX="252.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0"
-                        text="Изменить запись" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0"
-                        AnchorPane.leftAnchor="252.0"/>
-                <Button layoutX="337.0" layoutY="273.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0"
-                        text="Удалить запись" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0"
-                        AnchorPane.leftAnchor="337.0"/>
-                <Button layoutX="634.0" layoutY="301.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0"
+                
+                <Button onAction="#backToMenu" layoutX="634.0" layoutY="301.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="75.0"
                         text="Вернуться в меню" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="9.0"
                         AnchorPane.rightAnchor="14.0"/>
             </children>

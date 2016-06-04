@@ -36,7 +36,7 @@
                         text="Автомобили" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
                 <Button fx:id="btnBattery" onAction="#openBattery" mnemonicParsing="false" prefHeight="25.0"
                         prefWidth="170.0" text="Аккумуляторы" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
-                <Button mnemonicParsing="false" prefWidth="170.0" text="Аккумуляторы на авто"
+                <Button onAction="#openBatteryAuto" mnemonicParsing="false" prefWidth="170.0" text="Аккумуляторы на авто"
                         GridPane.halignment="CENTER" GridPane.rowIndex="3"/>
                 <Button onAction="#openTrip" mnemonicParsing="false" prefWidth="170.0" text="Рейсы" GridPane.halignment="CENTER"
                         GridPane.rowIndex="4"/>
@@ -44,7 +44,7 @@
                         GridPane.rowIndex="5"/>
                 <Button fx:id="btnBus" onAction="#openBus" mnemonicParsing="false" prefWidth="170.0" text="Шины"
                         GridPane.halignment="CENTER" GridPane.rowIndex="6"/>
-                <Button mnemonicParsing="false" prefWidth="170.0" text="Шины на авто" GridPane.halignment="CENTER"
+                <Button onAction="#openBusAuto" mnemonicParsing="false" prefWidth="170.0" text="Шины на авто" GridPane.halignment="CENTER"
                         GridPane.rowIndex="7"/>
                 <Button fx:id="btnExit" onAction="#exitClick" mnemonicParsing="false" prefHeight="25.0"
                         prefWidth="170.0" text="Выход" GridPane.halignment="CENTER" GridPane.rowIndex="8"/>
