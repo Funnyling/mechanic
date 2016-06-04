@@ -40,7 +40,7 @@
                         GridPane.halignment="CENTER" GridPane.rowIndex="3"/>
                 <Button onAction="#openTrip" mnemonicParsing="false" prefWidth="170.0" text="Рейсы" GridPane.halignment="CENTER"
                         GridPane.rowIndex="4"/>
-                <Button mnemonicParsing="false" prefWidth="170.0" text="Сотрудники" GridPane.halignment="CENTER"
+                <Button onAction="#openEmployee" mnemonicParsing="false" prefWidth="170.0" text="Сотрудники" GridPane.halignment="CENTER"
                         GridPane.rowIndex="5"/>
                 <Button fx:id="btnBus" onAction="#openBus" mnemonicParsing="false" prefWidth="170.0" text="Шины"
                         GridPane.halignment="CENTER" GridPane.rowIndex="6"/>

@@ -31,7 +31,7 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="336.0" prefWidth="165.0">
             <children>
-                <Button layoutX="14.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0"
+                <Button onAction="#backToMenu" layoutX="14.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0"
                         text="Вернуться в меню" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0"/>
                 <TextField fx:id="modelSearchText" layoutX="14.0" layoutY="27.0" prefHeight="25.0" prefWidth="138.0"
                            AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="27.0"/>

@@ -115,9 +115,6 @@ public class BatteryCardController extends BaseFxController {
         XWPFUtils.appendNewRun(paragraph, "Стоимость комплекта АКБ: ", 12, true, false, false);
         XWPFUtils.appendNewRun(paragraph, accumulator.getCost().toString(), 12, false, false, true);
 
-        XWPFUtils.appendNewRun(paragraph, "Заводской номер шины: ", 12, true, false, false);
-        XWPFUtils.appendNewRun(paragraph, accumulator.getFactoryNumber(), 12, false, false, true);
-
         XWPFUtils.appendNewRun(paragraph, "Гаражный номер АКБ: ", 12, true, false, false);
         XWPFUtils.appendNewRun(paragraph, accumulator.getNumber() + " руб.", 12, false, false, true);
 

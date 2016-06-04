@@ -3,6 +3,7 @@ package sample;
 import dao.*;
 import dao.impl.AccumulatorDaoImpl;
 import dao.impl.BusDaoImpl;
+import dao.impl.EmployeeDaoImpl;
 
 public class ServiceLocator {
 
@@ -23,17 +24,23 @@ public class ServiceLocator {
         return instance.tripDao;
     }
 
+    public static EmployeeDao getEmployeeDaoInstance() {
+        return instance.employeeDao;
+    }
+
     private static class ServiceLocatorHolder {
         BusDao busDao;
         AccumulatorDao accumulatorDao;
         AutoDao autoDao;
         TripDao tripDao;
+        EmployeeDao employeeDao;
 
         private ServiceLocatorHolder() {
             busDao = new BusDaoImpl();
             accumulatorDao = new AccumulatorDaoImpl();
             autoDao = new AutoDaoImpl();
             tripDao = new TripDaoImpl();
+            employeeDao = new EmployeeDaoImpl();
         }
     }
 }

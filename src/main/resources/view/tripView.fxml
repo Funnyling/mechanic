@@ -34,7 +34,7 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="194.0">
             <children>
-                <Button layoutX="14.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0"
+                <Button onAction="#backToMenu" layoutX="14.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0"
                         text="Вернуться в меню" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0"/>
             </children>
         </AnchorPane>

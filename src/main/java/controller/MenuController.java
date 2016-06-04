@@ -17,8 +17,7 @@ public class MenuController {
     private void openBus(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/busView.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            BusController controller = fxmlLoader.<BusController>getController();
+            Parent root = fxmlLoader.load();
             stage.setTitle("Информация о шинах");
             stage.setScene(new Scene(root));
             stage.show();
@@ -71,7 +70,20 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    @FXML
+    private void openEmployee(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/personView.fxml"));
+            Parent root = fxmlLoader.load();
+            stage.setTitle("Информация о сотрудниках");
+            stage.setScene(new Scene(root));
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -63,7 +63,7 @@ public class AutoController extends BaseFxController {
         String model = modelSearchText.getText();
         if (StringUtils.isEmpty(model)) {
             Dialogs.create()
-                    .message("Введите id для поиска!\n")
+                    .message("Введите модель автомобиля для поиска!\n")
                     .showWarning();
         } else {
             refreshTable(autoDao.findByModel(model));
