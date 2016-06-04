@@ -1,7 +1,9 @@
-package dao;
+package dao.impl;
 
+import dao.AutoDao;
 import model.Auto;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;

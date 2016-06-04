@@ -23,11 +23,11 @@ public class AccumulatorAuto {
     @Column(name = "condition")
     private String condition;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auto_id", referencedColumnName = "id")
     private Auto auto;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accumulator_id", referencedColumnName = "id")
     private Accumulator accumulator;
 

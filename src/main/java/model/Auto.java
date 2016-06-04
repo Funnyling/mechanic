@@ -24,10 +24,10 @@ public class Auto {
     @OneToMany(mappedBy = "auto", fetch = FetchType.EAGER)
     private List<Trip> trips;
 
-    @OneToMany(mappedBy = "auto", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "auto", fetch = FetchType.LAZY)
     private List<BusAuto> busAutoList;
 
-    @OneToMany(mappedBy = "auto", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "auto", fetch = FetchType.LAZY)
     private List<AccumulatorAuto> accumulatorAutoList;
 
     public Integer getId() {

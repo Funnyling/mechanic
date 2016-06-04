@@ -1,9 +1,7 @@
 package sample;
 
 import dao.*;
-import dao.impl.AccumulatorDaoImpl;
-import dao.impl.BusDaoImpl;
-import dao.impl.EmployeeDaoImpl;
+import dao.impl.*;
 
 public class ServiceLocator {
 

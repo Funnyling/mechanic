@@ -23,11 +23,11 @@ public class BusAuto {
     @Column(name = "condition")
     private String condition;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auto_id", referencedColumnName = "id")
     private Auto auto;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Bus_id", referencedColumnName = "id")
     private Bus bus;
 
