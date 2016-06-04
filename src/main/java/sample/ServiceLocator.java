@@ -1,9 +1,6 @@
 package sample;
 
-import dao.AccumulatorDao;
-import dao.AutoDao;
-import dao.AutoDaoImpl;
-import dao.BusDao;
+import dao.*;
 import dao.impl.AccumulatorDaoImpl;
 import dao.impl.BusDaoImpl;
 
@@ -22,15 +19,21 @@ public class ServiceLocator {
         return instance.autoDao;
     }
 
+    public static TripDao getTripDaoInstance() {
+        return instance.tripDao;
+    }
+
     private static class ServiceLocatorHolder {
         BusDao busDao;
         AccumulatorDao accumulatorDao;
         AutoDao autoDao;
+        TripDao tripDao;
 
         private ServiceLocatorHolder() {
             busDao = new BusDaoImpl();
             accumulatorDao = new AccumulatorDaoImpl();
             autoDao = new AutoDaoImpl();
+            tripDao = new TripDaoImpl();
         }
     }
 }

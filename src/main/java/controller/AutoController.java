@@ -50,8 +50,7 @@ public class AutoController extends BaseFxController {
 
     private void refreshTable() {
         List<Auto> results = autoDao.findAll();
-        result.setAll(results);
-        tableAuto.setItems(result);
+        refreshTable(results);
     }
 
     private void refreshTable(List<Auto> results) {
