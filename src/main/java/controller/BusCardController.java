@@ -148,7 +148,7 @@ public class BusCardController {
         XWPFUtils.appendNewRun(paragraph, txtSecondMember.getText() + " ___________________________", 12, false, false, true);
 
         File file = new File("Документ учета работы шины от " + nowDateString + ".docx");
-        FileUtils.saveandOpenFile(document, file);
+        FileUtils.saveAndOpenFile(document, file);
     }
 
     public void initScene(Bus bus) {
