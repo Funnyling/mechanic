@@ -3,7 +3,6 @@ package dao.impl;
 import dao.BusDao;
 import model.Bus;
 import org.hibernate.*;
-import org.hibernate.criterion.Restrictions;
 import util.HibernateUtils;
 
 import java.util.List;
@@ -27,9 +26,9 @@ public class BusDaoImpl implements BusDao {
     @SuppressWarnings("unchecked")
     public List<Bus> findByFactoryNumber(String factoryNumber) {
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Bus.class);
-        criteria.add(Restrictions.like("factoryNumber", "%" + factoryNumber + "%"));
-        List<Bus> result = criteria.list();
+        Query query = session.createQuery("from model.Bus where factoryNumber like concat('%', :factoryNumber, '%')");
+        query.setString("factoryNumber", factoryNumber);
+        List<Bus> result = query.list();
         session.close();
         return result;
     }
@@ -42,11 +41,12 @@ public class BusDaoImpl implements BusDao {
             transaction.begin();
             session.delete(bus);
             transaction.commit();
+            session.flush();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.flush();
-        session.close();
     }
 
     public Bus findById(Integer busId) {
@@ -60,19 +60,20 @@ public class BusDaoImpl implements BusDao {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("delete model.Bus where id = :id");
         query.setInteger("id", busId);
+        int rows = -1;
 
         Transaction transaction = session.beginTransaction();
         try {
             transaction.begin();
-            int rows = query.executeUpdate();
+            rows = query.executeUpdate();
             transaction.commit();
-            return rows;
+            session.flush();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.flush();
-        session.close();
-        return -1;
+        return rows;
     }
 
     public void save(Bus bus) {
@@ -84,8 +85,9 @@ public class BusDaoImpl implements BusDao {
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.close();
     }
 
     public void update(Bus bus) {
@@ -106,10 +108,11 @@ public class BusDaoImpl implements BusDao {
             transaction.begin();
             query.executeUpdate();
             transaction.commit();
+            session.flush();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.flush();
-        session.close();
     }
 }

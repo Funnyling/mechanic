@@ -3,7 +3,6 @@ package dao.impl;
 import dao.AccumulatorDao;
 import model.Accumulator;
 import org.hibernate.*;
-import org.hibernate.criterion.Restrictions;
 import util.HibernateUtils;
 
 import java.util.List;
@@ -34,11 +33,12 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
             transaction.begin();
             session.delete(accumulator);
             transaction.commit();
+            session.flush();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.flush();
-        session.close();
     }
 
     @Override
@@ -46,19 +46,19 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("delete model.Accumulator where id = :id");
         query.setInteger("id", accumulatorId);
-
+        int rows = -1;
         Transaction transaction = session.beginTransaction();
         try {
             transaction.begin();
-            int rows = query.executeUpdate();
+            rows = query.executeUpdate();
             transaction.commit();
-            return rows;
+            session.flush();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.flush();
-        session.close();
-        return -1;
+        return rows;
     }
 
     @Override
@@ -71,8 +71,9 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.close();
     }
 
     @Override
@@ -93,20 +94,21 @@ public class AccumulatorDaoImpl implements AccumulatorDao {
             transaction.begin();
             query.executeUpdate();
             transaction.commit();
+            session.flush();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }
-        session.flush();
-        session.close();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Accumulator> findByFactoryNumber(String factoryNumber) {
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Accumulator.class);
-        criteria.add(Restrictions.like("factoryNumber", "%" + factoryNumber + "%"));
-        List<Accumulator> result = criteria.list();
+        Query query = session.createQuery("from model.Accumulator where factoryNumber like concat('%', :factoryNumber, '%')");
+        query.setString("factoryNumber", factoryNumber);
+        List<Accumulator> result = query.list();
         session.close();
         return result;
     }
